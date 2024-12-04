@@ -1,71 +1,87 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Spinner, Button } from 'react-bootstrap';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react"; /* React */
+
+import { Card, Row, Col, Spinner, Button } from "react-bootstrap"; /* Bootstrap objekti */
+
+import { useLocation, useNavigate } from "react-router-dom"; /* Navigacija */
 
 const Oblasti = () => {
+  /* Deklarisanje promenljivih */
   const [oblasti, setOblasti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id_predmeta } = useParams();  // Uzimamo ID predmeta iz URL-a
-  const navigate = useNavigate();  // Koristimo useNavigate za navigaciju
 
-  useEffect(() => {
+  /* Navigacija */
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  /* Učitava sve podatke koji su prosleđeni od prethodne stranice */
+  const idPredmeta = location.state?.idPredmeta;
+  const nazivPredmeta = location.state?.nazivPredmeta
+  const nazivPredmetaLowerReplaced = location.state?.nazivPredmetaLowerReplaced
+  
+  /* getOblasti */
+  useEffect(() => { /* "useEffect is a React Hook that lets you synchronize a component with an external system." */
     const fetchOblasti = async () => {
+      /* Try-catch za hvatanje grešaka */
       try {
-        console.log(`Slanje GET zahteva na: http://100.71.17.102/getOblasti/${id_predmeta}`);
-        const response = await fetch(`http://100.71.17.102:5000/getOblasti?id_predmeta=${id_predmeta}`); // API URL za oblasti vezane za predmet
+        console.log(`Slanje GET zahteva.`);
+        const response = await fetch(`http://100.71.17.102:5000/getOblasti?id_predmeta=${idPredmeta}`); /* GET request */
         if (!response.ok) {
-          throw new Error('Ne mogu da dobijem podatke o oblastima');
+          throw new Error("Ne mogu da dobijem podatke o oblastima.");
         }
         const data = await response.json();
-        console.log('Podaci dobijeni:', data);
-        setOblasti(data);
+        console.log("Podaci dobijeni:", data);
+        setOblasti(data); /* Učitavanje dobijenih podataka u konstantu */
       } catch (error) {
-        console.error('Greška pri učitavanju podataka:', error);
-        setError(error.message);
+        console.error("Greška pri učitavanju podataka:", error);
+        setError(error.message); /* Učitavanje greške u konstantu */
       } finally {
-        setLoading(false);
+        setLoading(false); /* Završi animaciju učitavanja */
       }
     };
 
     fetchOblasti();
-  }, [id_predmeta]);
+  }, [idPredmeta]);
 
+  /* Prikazivanje animacije učitavanja */
   if (loading) {
     return (
-      <div className="text-center">
+      <div className="d-flex justify-content-center align-items-center vh-100">
         <Spinner animation="border" variant="primary" />
       </div>
     );
   }
 
+  /* Prikazivanje greške pri unosu podataka */
   if (error) {
-    return <div className="alert alert-danger">{error}</div>;
+    return (
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="alert alert-danger">{error}</div>
+      </div>
+    );
   }
 
-  // Funkcija koja se poziva kada kliknete na dugme (Pogledaj lekcije)
-  const handleLekcijeClick = (id_oblasti) => {
-    navigate(`/lekcije/${id_oblasti}`);  // Navigacija na stranicu lekcija sa ID oblasti
+  /* Funkcija koja se pokreće klikom na dugme */
+  const handleButtonClick = (nazivOblasti, idOblasti) => {
+    var nazivOblastiLowerReplaced = nazivOblasti.replace(/\s+/g, "-").toLowerCase();
+    navigate(`/${nazivPredmetaLowerReplaced}/${nazivOblastiLowerReplaced}`, { state: { idOblasti, nazivOblasti, nazivOblastiLowerReplaced } });  /* Salje korisnika na /ime_predmeta */
   };
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Oblasti za predmet {id_predmeta}</h1>
-      <Row className="d-flex justify-content-center">
+    <div className="container">
+      <h1 className="text-center">Oblasti za predmet {nazivPredmeta}</h1>
+      <Row>
         {oblasti.map((oblast) => (
-          <Col sm={12} md={6} lg={4} key={oblast.id_oblasti} className="mb-4 d-flex justify-content-center">
-            <Card style={{ border: '1px solid #007bff', backgroundColor: '#f8f9fa' }}>
+          <Col key={oblast.id_oblasti}>
+            <Card>
+              <Card.Header>
+              <Card.Title>{oblast.naziv}</Card.Title>
+              </Card.Header>
               <Card.Body>
-                <Card.Title className="text-center">{oblast.naziv}</Card.Title>
                 <Card.Text>{oblast.opis}</Card.Text>
-                <div className="text-center">
-                  <Button
-                    variant="primary"
-                    onClick={() => handleLekcijeClick(oblast.id_oblasti)}  // Dugme za navigaciju na lekcije
-                  >
-                    Pogledaj lekcije
-                  </Button>
-                </div>
+                <Button variant="primary" onClick={() => handleButtonClick(oblast.naziv, oblast.id_oblasti)}>
+                  Pogledaj lekcije
+                </Button>
               </Card.Body>
             </Card>
           </Col>

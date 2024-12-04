@@ -8,9 +8,9 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Predmeti />} />  {/* Početna stranica za predmete */}
-        <Route path="/oblasti/:id_predmeta" element={<Oblasti />} />  {/* Stranica za oblasti, sa ID predmeta */}
-        <Route path="/lekcije/:id_oblasti" element={<Lekcije />} />  {/* Stranica za lekcije, sa ID oblasti */}
+        <Route path="/" element={<Predmeti />} />
+        <Route path="/:nazivPredmetaLowerReplaced" element={<Oblasti />} />
+        <Route path="/:nazivPredmetaLowerReplaced/:nazivOblastiLowerReplaced" element={<Lekcije />} />
       </Routes>
     </Router>
   );
