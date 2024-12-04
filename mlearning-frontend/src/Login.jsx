@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"; /* React */
 
 import { Card, Row, Col } from "react-bootstrap";
 
-import { Button, Form, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
+import { Button, Form, Container } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { useNavigate } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
 
