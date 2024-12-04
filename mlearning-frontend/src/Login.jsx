@@ -110,7 +110,7 @@ const Login = () => {
           <span className="blue-text">m</span>Learning
           <span className="log">.Login</span>
         </h2>
-        <Row className="justify-content-center">
+        <Row className="justify-content-left">
           <Col xs={12} sm={8} md={6} lg={6}>
             <Form onSubmit={handleSubmit} className="login-form">
               <Form.Group controlId="formEmail">

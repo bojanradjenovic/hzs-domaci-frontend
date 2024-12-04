@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
