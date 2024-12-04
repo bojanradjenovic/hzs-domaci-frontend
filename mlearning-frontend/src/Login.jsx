@@ -37,7 +37,7 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax`;
+        document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
         console.log("Login successful", data);
 
         navigate("/"); /* Šalje na glavnu stranicu kada je login uspešan */
