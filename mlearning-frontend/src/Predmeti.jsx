@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Spinner, Button } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
 
-import { useNavigate } from "react-router-dom"; /* Navigacija */
+import { NavLink } from "react-router-dom"; /* Navigacija */
+import LoadingSpinner from "./LoadingSpinner";
 
 
 const Predmeti = () => {
@@ -10,8 +11,6 @@ const Predmeti = () => {
   const [predmeti, setPredmeti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const navigate = useNavigate(); /* Navigacija */
 
   /* getPredmeti */
   useEffect(() => { /* "useEffect is a React Hook that lets you synchronize a component with an external system." */
@@ -40,29 +39,21 @@ const Predmeti = () => {
   /* Prikazivanje animacije učitavanja */
   if (loading) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <Spinner animation="border" variant="primary" />
-      </div>
+      <LoadingSpinner />
     );
   }
 
   /* Prikazivanje greške pri unosu podataka */
   if (error) {
     return (
-      <div className="d-flex justify-content-center align-items-center vh-100">
-        <div className="alert alert-danger">{error}</div>
-      </div>
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Alert variant="danger">{error}</Alert>
+      </Container>
     );
   }
 
-  /* Funkcija koja se pokreće klikom na dugme */
-  const handleButtonClick = (nazivPredmeta, idPredmeta) => {
-    var nazivPredmetaLowerReplaced = nazivPredmeta.replace(/\s+/g, "-").toLowerCase();
-    navigate(`/${nazivPredmetaLowerReplaced}`, { state: { idPredmeta, nazivPredmeta, nazivPredmetaLowerReplaced } });  /* Salje korisnika na /ime_predmeta */
-  };
-
   return (
-    <div className="container-fluid">
+    <Container>
       <h1 className="text-center">Predmeti</h1>
       <Row>
         {predmeti.map((predmet) => (
@@ -70,15 +61,17 @@ const Predmeti = () => {
             <Card>
               <Card.Body>
                 <Card.Title>{predmet.naziv}</Card.Title>
-                <Button variant="primary" onClick={() => handleButtonClick(predmet.naziv, predmet.id_predmeta)}>
-                  Pogledaj oblasti
-                </Button>
+                <NavLink to={`/predmet/${predmet.id_predmeta}`}>
+                  <Button variant="primary">
+                    Pogledaj oblasti
+                  </Button>
+                </NavLink>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </div>
+    </Container>
   );
 };
 

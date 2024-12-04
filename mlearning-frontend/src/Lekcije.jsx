@@ -1,63 +1,81 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Spinner } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react"; /* React */
+
+import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
+
+import { NavLink, useParams } from "react-router-dom"; /* Navigacija */
+import LoadingSpinner from "./LoadingSpinner";
 
 const Lekcije = () => {
+  /* Deklarisanje promenljivih */
   const [lekcije, setLekcije] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { id_oblasti } = useParams();  // Uzimamo ID oblasti iz URL-a
 
-  useEffect(() => {
+  const idOblasti = useParams();  /* Uzima id_oblasti za koji će tražiti lelkcije iz URL-a */
+
+  /* getLekcije */
+  useEffect(() => { /* "useEffect is a React Hook that lets you synchronize a component with an external system." */
     const fetchLekcije = async () => {
+      /* Try-catch za hvatanje grešaka */
       try {
-        console.log(`Slanje GET zahteva na: http://100.71.17.102/getLekcije/${id_oblasti}`);
-        const response = await fetch(`http://100.71.17.102:5000/getLekcije?id_oblasti=${id_oblasti}`);
+        console.log("Slanje GET zahteva.");
+        const response = await fetch(`http://100.71.17.102:5000/getLekcije?id_oblasti=${idOblasti.idOblasti}`); /* GET request */
         if (!response.ok) {
-          throw new Error('Ne mogu da dobijem podatke o lekcijama');
+          throw new Error("Ne mogu da dobijem podatke o lekcijama");
         }
         const data = await response.json();
-        console.log('Podaci dobijeni:', data);
-        setLekcije(data);
+        console.log("Podaci dobijeni:", data);
+        setLekcije(data); /* Učitavanje dobijenih podataka u konstantu */
       } catch (error) {
-        console.error('Greška pri učitavanju podataka:', error);
-        setError(error.message);
+        console.error("Greška pri učitavanju podataka:", error);
+        setError(error.message); /* Učitavanje greške u konstantu */
       } finally {
-        setLoading(false);
+        setLoading(false); /* Završi animaciju učitavanja */
       }
     };
 
-    fetchLekcije();
-  }, [id_oblasti]);
+    fetchLekcije(); /* Pozivanje same funkcije */
+  }, [idOblasti]);
 
+  /* Prikazivanje animacije učitavanja */
   if (loading) {
     return (
-      <div className="text-center">
-        <Spinner animation="border" variant="primary" />
-      </div>
+      <LoadingSpinner />
     );
   }
 
+  /* Prikazivanje greške pri unosu podataka */
   if (error) {
-    return <div className="alert alert-danger">{error}</div>;
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Alert variant="danger">{error}</Alert>
+      </Container>
+    );
   }
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center">Lekcije za oblast {id_oblasti}</h1>
-      <Row className="d-flex justify-content-center">
+    <Container>
+      <h1 className="text-center">Lekcije</h1>
+      <Row>
         {lekcije.map((lekcija) => (
-          <Col sm={12} md={6} lg={4} key={lekcija.id_lekcije} className="mb-4 d-flex justify-content-center">
-            <Card style={{ border: '1px solid #007bff', backgroundColor: '#f8f9fa' }}>
+          <Col key={lekcija.id_lekcije}>
+            <Card>
+              <Card.Header>
+                <Card.Title>{lekcija.naziv}</Card.Title>
+              </Card.Header>
               <Card.Body>
-                <Card.Title className="text-center">{lekcija.naziv}</Card.Title>
                 <Card.Text>{lekcija.opis}</Card.Text>
+                <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
+                  <Button>
+                    Pogledaj lekciju
+                  </Button>
+                </NavLink>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </div>
+    </Container>
   );
 };
 

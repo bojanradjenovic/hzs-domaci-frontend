@@ -1,18 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react'; /* React */
+
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'; /* Navigacija */
+
+/* Stranice */
 import Predmeti from './Predmeti';
 import Oblasti from './Oblasti';
 import Lekcije from './Lekcije';
+import Login from './Login';
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Predmeti />
+  },
+  {
+    path: "/login",
+    element: <Login />
+  },
+  {
+    path: "/predmet/:idPredmeta",
+    element: <Oblasti />,
+  },
+  {
+    path: "oblast/:idOblasti",
+    element: <Lekcije />,
+  }
+]);
 
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Predmeti />} />
-        <Route path="/:nazivPredmetaLowerReplaced" element={<Oblasti />} />
-        <Route path="/:nazivPredmetaLowerReplaced/:nazivOblastiLowerReplaced" element={<Lekcije />} />
-      </Routes>
-    </Router>
+    <RouterProvider router={router} />
   );
 };
 
