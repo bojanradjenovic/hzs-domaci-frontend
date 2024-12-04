@@ -58,10 +58,17 @@ const Oblasti = () => {
       <h1 className="text-center">Oblasti</h1>
       <Row>
         {oblasti.map((oblast) => (
-          <Col key={oblast.id_oblasti}>
+          <Col 
+            key={oblast.id_oblasti} 
+            xs={12} 
+            sm={6} 
+            md={4} 
+            lg={3} 
+            className="mb-4"
+          >
             <Card>
               <Card.Header>
-              <Card.Title>{oblast.naziv}</Card.Title>
+                <Card.Title>{oblast.naziv}</Card.Title>
               </Card.Header>
               <Card.Body>
                 <Card.Text>{oblast.opis}</Card.Text>

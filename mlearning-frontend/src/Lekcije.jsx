@@ -55,27 +55,34 @@ const Lekcije = () => {
 
   return (
     <Container>
-      <h1 className="text-center">Lekcije</h1>
-      <Row>
-        {lekcije.map((lekcija) => (
-          <Col key={lekcija.id_lekcije}>
-            <Card>
-              <Card.Header>
-                <Card.Title>{lekcija.naziv}</Card.Title>
-              </Card.Header>
-              <Card.Body>
-                <Card.Text>{lekcija.opis}</Card.Text>
-                <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
-                  <Button variant="primary">
-                    Pogledaj lekciju
-                  </Button>
-                </NavLink>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <h1 className="text-center">Lekcije</h1>
+    <Row>
+      {lekcije.map((lekcija) => (
+        <Col 
+          key={lekcija.id_lekcije} 
+          xs={12} 
+          sm={6} 
+          md={4} 
+          lg={3} 
+          className="mb-4"
+        >
+          <Card>
+            <Card.Header>
+              <Card.Title>{lekcija.naziv}</Card.Title>
+            </Card.Header>
+            <Card.Body>
+              <Card.Text>{lekcija.opis}</Card.Text>
+              <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
+                <Button variant="primary">
+                  Pogledaj lekciju
+                </Button>
+              </NavLink>
+            </Card.Body>
+          </Card>
+        </Col>
+      ))}
+    </Row>
+  </Container>
   );
 };
 

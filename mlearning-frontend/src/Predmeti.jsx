@@ -57,7 +57,14 @@ const Predmeti = () => {
       <h1 className="text-center">Predmeti</h1>
       <Row>
         {predmeti.map((predmet) => (
-          <Col key={predmet.id_predmeta}>
+          <Col 
+            key={predmet.id_predmeta} 
+            xs={12} 
+            sm={6} 
+            md={4} 
+            lg={3} 
+            className="mb-4"
+          >
             <Card>
               <Card.Body>
                 <Card.Title>{predmet.naziv}</Card.Title>
