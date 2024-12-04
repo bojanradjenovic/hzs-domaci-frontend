@@ -5,7 +5,6 @@ import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstr
 import { NavLink } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
-import './GeneralnoCard.css';
 
 import { useNavigate } from "react-router-dom"; /* Navigacija */
 
@@ -93,9 +92,11 @@ const Predmeti = () => {
               <Card.Body>
                 <Card.Title className="fw-bold">{predmet.naziv}</Card.Title>
                 <Card.Text>{predmet.opis}</Card.Text>
-                <Button variant="primary" href={`/predmet/${predmet.id_predmeta}`}>
-                  Pogledaj oblasti
-                </Button>
+                <NavLink to={`/predmet/${predmet.id_predmeta}`}>
+                  <Button variant="primary" href={`/predmet/${predmet.id_predmeta}`}>
+                    Pogledaj oblasti
+                  </Button>
+                </NavLink>
               </Card.Body>
             </Card>
           </Col>

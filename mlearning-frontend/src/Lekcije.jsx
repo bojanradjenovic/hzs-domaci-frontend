@@ -83,24 +83,28 @@ const Lekcije = () => {
         alignItems: 'center',
       }}
     >
-    <Container>
-    <h1 className="modern-header">Lekcije</h1>
-    <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-      {lekcije.map((lekcija) => (
-        <Col key={lekcija.id_lekcije}>
-          <Card className="custom-card shadow-sm">
-            <Card.Body>
-              <Card.Title className="fw-bold">{lekcija.naziv}</Card.Title>
-              <Card.Text>{lekcija.opis}</Card.Text>
-              <Button variant="primary">Pogledaj lekciju</Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      ))}
-    </Row>
-  </Container>
-  </div>
-  );
+      <Container>
+        <h1 className="modern-header">Lekcije</h1>
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+          {lekcije.map((lekcija) => (
+            <Col key={lekcija.id_lekcije}>
+              <Card className="custom-card shadow-sm">
+                <Card.Body>
+                  <Card.Title className="fw-bold">{lekcija.naziv}</Card.Title>
+                  <Card.Text>{lekcija.opis}</Card.Text>
+                  <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
+                    <Button variant="primary">
+                      Pogledaj lekciju
+                    </Button>
+                  </NavLink>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  );  
 };
 
 export default Lekcije;  // Obavezno staviti export default

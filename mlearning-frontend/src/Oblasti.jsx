@@ -5,7 +5,6 @@ import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstr
 import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
-import './GeneralnoCard.css';
 
 const Oblasti = () => {
   /* Deklarisanje konstanta */
@@ -83,25 +82,31 @@ const Oblasti = () => {
         alignItems: 'center',
       }}
     >
-    <Container>
-      <h1 className="modern-header">Oblasti</h1>
-      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-        {oblasti.map((oblast) => (
-          <Col key={oblast.id_oblasti}>
-            <Card className="custom-card shadow-sm">
-              <Card.Body>
-                <Card.Title className="fw-bold">{oblast.naziv}</Card.Title>
-                <Card.Text>{oblast.opis}</Card.Text>
-                <Button variant="primary" href={`/oblast/${oblast.id_oblasti}`}>
-                  Pogledaj lekcije
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container></div>
-  );
+      <Container>
+        <h1 className="modern-header">Oblasti</h1>
+        <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+          {oblasti.map((oblast) => (
+            <Col key={oblast.id_oblasti}>
+              <Card className="custom-card shadow-sm">
+                <Card.Body>
+                  <Card.Title className="fw-bold">{oblast.naziv}</Card.Title>
+                  <Card.Text>{oblast.opis}</Card.Text>
+                  <NavLink to={`/oblast/${oblast.id_oblasti}`}>
+                    <Button
+                      variant="primary"
+                      href={`/oblast/${oblast.id_oblasti}`}
+                    >
+                      Pogledaj lekcije
+                    </Button>
+                  </NavLink>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
+    </div>
+  );    
 };
 
 export default Oblasti;
