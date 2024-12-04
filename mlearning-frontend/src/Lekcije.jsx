@@ -66,7 +66,7 @@ const Lekcije = () => {
               <Card.Body>
                 <Card.Text>{lekcija.opis}</Card.Text>
                 <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
-                  <Button>
+                  <Button variant="primary">
                     Pogledaj lekciju
                   </Button>
                 </NavLink>
