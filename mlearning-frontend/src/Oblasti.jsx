@@ -4,6 +4,7 @@ import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstr
 
 import { NavLink, useParams } from "react-router-dom"; /* Navigacija */
 import LoadingSpinner from "./LoadingSpinner";
+import './GeneralnoCard.css';
 
 const Oblasti = () => {
   /* Deklarisanje promenljivih */
@@ -54,35 +55,35 @@ const Oblasti = () => {
   }
 
   return (
+    <div
+      style={{
+        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
     <Container>
-      <h1 className="text-center">Oblasti</h1>
-      <Row>
+      <h1 className="modern-header">Oblasti</h1>
+      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {oblasti.map((oblast) => (
-          <Col 
-            key={oblast.id_oblasti} 
-            xs={12} 
-            sm={6} 
-            md={4} 
-            lg={3} 
-            className="mb-4"
-          >
-            <Card>
-              <Card.Header>
-                <Card.Title>{oblast.naziv}</Card.Title>
-              </Card.Header>
+          <Col key={oblast.id_oblasti}>
+            <Card className="custom-card shadow-sm">
               <Card.Body>
+                <Card.Title className="fw-bold">{oblast.naziv}</Card.Title>
                 <Card.Text>{oblast.opis}</Card.Text>
-                <NavLink to={`/oblast/${oblast.id_oblasti}`}>
-                  <Button variant="primary">
-                    Pogledaj lekcije
-                  </Button>
-                </NavLink>
+                <Button variant="primary" href={`/oblast/${oblast.id_oblasti}`}>
+                  Pogledaj lekcije
+                </Button>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
-    </Container>
+    </Container></div>
   );
 };
 

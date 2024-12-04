@@ -4,6 +4,7 @@ import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstr
 
 import { NavLink, useParams } from "react-router-dom"; /* Navigacija */
 import LoadingSpinner from "./LoadingSpinner";
+import './GeneralnoCard.css';
 
 const Lekcije = () => {
   /* Deklarisanje promenljivih */
@@ -54,35 +55,34 @@ const Lekcije = () => {
   }
 
   return (
+    <div
+      style={{
+        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
     <Container>
-    <h1 className="text-center">Lekcije</h1>
-    <Row>
+    <h1 className="modern-header">Lekcije</h1>
+    <Row xs={1} sm={2} md={3} lg={4} className="g-4">
       {lekcije.map((lekcija) => (
-        <Col 
-          key={lekcija.id_lekcije} 
-          xs={12} 
-          sm={6} 
-          md={4} 
-          lg={3} 
-          className="mb-4"
-        >
-          <Card>
-            <Card.Header>
-              <Card.Title>{lekcija.naziv}</Card.Title>
-            </Card.Header>
+        <Col key={lekcija.id_lekcije}>
+          <Card className="custom-card shadow-sm">
             <Card.Body>
+              <Card.Title className="fw-bold">{lekcija.naziv}</Card.Title>
               <Card.Text>{lekcija.opis}</Card.Text>
-              <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
-                <Button variant="primary">
-                  Pogledaj lekciju
-                </Button>
-              </NavLink>
+              <Button variant="primary">Pogledaj lekciju</Button>
             </Card.Body>
           </Card>
         </Col>
       ))}
     </Row>
   </Container>
+  </div>
   );
 };
 

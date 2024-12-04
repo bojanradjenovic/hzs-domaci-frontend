@@ -1,8 +1,12 @@
 import React, { useState } from "react"; /* React */
 
+import { Card, Row, Col } from "react-bootstrap";
+
 import { Button, Form, Container } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { useNavigate } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
+
+import './GeneralnoCard.css'
 
 const Login = () => {
   /* Deklarisanje promenljivih */
@@ -51,23 +55,50 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <h2 className="text-center">Login</h2>
-      <Form onSubmit={handleSubmit}>
+    <div
+      style={{
+        backgroundImage: 'url(../assets/knjige2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+    <Container className="login-container">
+      <h2 className="modern-login" ><span class="blue-text">m</span>Learning<span class="log">.Login</span></h2>
+      <Row className="justify-content-center">
+        <Col xs={12} sm={8} md={6} lg={6}></Col>
+      <Form onSubmit={handleSubmit} className="login-form">
         <Form.Group controlId="formEmail">
           <Form.Label>Korisničko ime</Form.Label>
-          <Form.Control type="text" placeholder="Unesite korisničko ime" value={korisnicko_ime} onChange={(e) => setKorisnicko_ime(e.target.value)}/>
+          <Form.Control 
+            type="text" 
+            placeholder="Unesite korisničko ime" 
+            value={korisnicko_ime} 
+            onChange={(e) => setKorisnicko_ime(e.target.value)} 
+            className="input-field"
+          />
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Šifra</Form.Label>
-          <Form.Control type="password" placeholder="Unesite šifru" value={sifra} onChange={(e) => setSifra(e.target.value)}/>
+          <Form.Control 
+            type="password" 
+            placeholder="Unesite šifru" 
+            value={sifra} 
+            onChange={(e) => setSifra(e.target.value)} 
+            className="input-field"
+          />
         </Form.Group>
         {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="submit-btn">
           Login
         </Button>
-      </Form>
+        </Form>
+      </Row>
     </Container>
+    </div>
   );
 };
 

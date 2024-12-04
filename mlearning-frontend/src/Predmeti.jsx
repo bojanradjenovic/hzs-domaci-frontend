@@ -4,6 +4,7 @@ import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstr
 
 import { NavLink } from "react-router-dom"; /* Navigacija */
 import LoadingSpinner from "./LoadingSpinner";
+import './GeneralnoCard.css';
 
 
 const Predmeti = () => {
@@ -53,32 +54,36 @@ const Predmeti = () => {
   }
 
   return (
+    <div
+      style={{
+        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
     <Container>
-      <h1 className="text-center">Predmeti</h1>
-      <Row>
+      <h1 className="modern-header">Pred<span class="blue-text">m</span>eti</h1>
+      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
         {predmeti.map((predmet) => (
-          <Col 
-            key={predmet.id_predmeta} 
-            xs={12} 
-            sm={6} 
-            md={4} 
-            lg={3} 
-            className="mb-4"
-          >
-            <Card>
+          <Col key={predmet.id_predmeta}>
+            <Card className="custom-card shadow-sm">
               <Card.Body>
-                <Card.Title>{predmet.naziv}</Card.Title>
-                <NavLink to={`/predmet/${predmet.id_predmeta}`}>
-                  <Button variant="primary">
-                    Pogledaj oblasti
-                  </Button>
-                </NavLink>
+                <Card.Title className="fw-bold">{predmet.naziv}</Card.Title>
+                <Card.Text>{predmet.opis}</Card.Text>
+                <Button variant="primary" href={`/predmet/${predmet.id_predmeta}`}>
+                  Pogledaj oblasti
+                </Button>
               </Card.Body>
             </Card>
           </Col>
         ))}
       </Row>
     </Container>
+    </div>
   );
 };
 

@@ -1,0 +1,202 @@
+.custom-card {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  border-radius: 10px; /* Zaobljeni uglovi */
+  background-color: #ffffff; /* Pozadina kartice */
+  border: 1px solid #ddd; /* Border boja */
+  padding: 15px; /* Dodavanje unutrašnjeg razmaka */
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Hover efekat (uvećavanje i senka) */
+.custom-card:hover {
+  transform: scale(1.05); /* Uvećava karticu */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Dodaje senku */
+}
+
+/* Stil za dugme */
+.custom-card .btn {
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  
+}
+
+.custom-card .btn:hover {
+  background-color: #154e8b; /* Tamniji ton za hover na dugmetu */
+  transform: scale(1.05); /* Blago uvećanje dugmeta */
+
+}
+
+/* Stil za naziv kartice */
+.custom-card .card-title {
+  color: #6c757d; /* Svetlo siva boja */
+  font-size: 1.25rem; /* Povećaj veličinu fonta */
+  font-weight: 600; /* Polu-tastaturna težina */
+  margin-bottom: 10px; /* Dodaj prostor ispod naslova */
+  transition: color 0.3s ease;
+  
+}
+
+.custom-card:hover .card-title {
+  color: #0059ff;; /* Tamnija nijansa plave boje kada je hover */
+}
+
+/* Stil za tekst u kartici */
+.custom-card .card-text {
+  font-size: 1rem;
+  color: #495057; /* Tamno siva boja za tekst */
+  margin-bottom: 15px; /* Razmak između opisa i dugmeta */
+
+}
+
+.custom-card .card-body {
+  padding: 20px; /* Dodaj više prostora unutar kartice */
+ 
+}
+
+.modern-header {
+  font-family: 'Roboto', sans-serif;
+  font-size: 6rem;
+  font-weight: 700;
+  background: white; /* Bela pozadina direktno */
+  color: rgb(61, 61, 61); /* Crna boja teksta za kontrast */
+  text-align: center;
+  letter-spacing: 2px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  padding: 20px; /* Prostor oko teksta */
+  border-radius: 10px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Blagi senkoviti efekat */
+  display: inline-block; /* Ograniči širinu na sadržaj */
+  animation: fadeIn 0.5s ease-in-out; /* Jednostavna animacija za ulaz */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modern-login {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10rem;
+  font-weight: 700;
+  color:rgba(0, 0, 0, 0.1);
+  text-align: center;
+  letter-spacing: 1px;
+ 
+  margin-top: 0px;
+  margin-bottom: 20px;
+  
+  border-radius: 10px; /* Zaobljeni uglovi */
+ 
+  display: inline-block; /* Ograniči širinu na sadržaj */
+  animation: fadeIn 0.5s ease-in-out; /* Jednostavna animacija za ulaz */
+}
+.blue-text{
+  color:#0059ff;
+}
+.log{
+  font-size: 2rem;
+  color:rgb(66, 66, 66);
+  
+}
+
+
+/* Animacija za glavnu boju teksta */
+@keyframes textAnimation {
+  0% {
+    background-position: -200%;
+  }
+  50% {
+    background-position: 200%;
+  }
+  100% {
+    background-position: -200%;
+  }
+}
+
+/* Animacija senke */
+@keyframes textShadowAnimation {
+  0% {
+    transform: translate(4px, 4px); /* Početna pozicija senke */
+  }
+  50% {
+    transform: translate(-4px, -4px); /* Senka se pomera u suprotnom smeru */
+  }
+  100% {
+    transform: translate(4px, 4px); /* Vraća se na početnu poziciju */
+  }
+}
+
+.login-container {
+  max-width: 400px; /* Maksimalna širina za formu */
+  margin: 50px auto; /* Centriraj formu */
+  padding: 30px; /* Unutrašnji razmak */
+  background-color: #f7f9fc; /* Svetla pozadina */
+  border-radius: 8px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Blaga senka */
+}
+
+/* Naslov */
+.login-container h2 {
+  font-family: 'Roboto', sans-serif; /* Moderni font */
+  color: #333; /* Tamna boja za tekst */
+  margin-bottom: 20px; /* Razmak od formulara */
+}
+
+/* Input polja */
+.input-field {
+  border-radius: 5px; /* Zaobljeni uglovi */
+  border: 1px solid #ddd; /* Svetlo siva ivica */
+  background-color: #fff; /* Belo pozadinsko polje */
+  padding: 10px; /* Unutrašnji razmak */
+  font-size: 1rem; /* Srednja veličina fonta */
+  margin-bottom: 15px; /* Razmak između polja */
+  transition: all 0.3s ease; /* Glatka animacija za hover i focus */
+}
+
+/* Efekat fokusa na input polju */
+.input-field:focus {
+  border-color: rgb(68, 81, 190); /* Plavi okvir pri fokusu */
+  box-shadow: 0 0 5px rgb(51, 64, 182); /* Blaga senka oko inputa */
+  outline: none; /* Ukloni standardni outline */
+}
+
+/* Dugme */
+.submit-btn {
+  width: 100%; /* Dugme zauzima celu širinu */
+  padding: 10px; /* Unutrašnji razmak */
+  border-radius: 5px; /* Zaobljeni uglovi */
+  font-size: 1.2rem; /* Veći font */
+  font-weight: bold; /* Podebljan font */
+  background-color: rgb(64, 76, 187); /* Plava boja pozadine */
+  color: #fff; /* Bela boja teksta */
+  border: none; /* Ukloni ivicu dugmeta */
+  transition: all 0.3s ease; /* Glatka animacija */
+}
+
+/* Hover efekat na dugme */
+.submit-btn:hover {
+  background-color: #0059ff;; /* Tamnija plava na hover */
+  cursor: pointer; /* Prikazuje pointer kursor na hover */
+}
+
+/* Poruka greške */
+.danger {
+  font-size: 0.9rem; /* Manji font za grešku */
+  margin-top: 10px; /* Razmak od inputa */
+}
+
+/* Responsivnost za manju širinu ekrana */
+@media (max-width: 600px) {
+  .login-container {
+    padding: 20px; /* Manji padding za mobilne uređaje */
+  }
+
+  .submit-btn {
+    font-size: 1rem; /* Manji font za dugme na manjim ekranima */
+  }
+}
+
