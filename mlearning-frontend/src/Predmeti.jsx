@@ -3,14 +3,22 @@ import React, { useEffect, useState } from "react"; /* React */
 import { Card, Row, Col, Spinner, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink } from "react-router-dom"; /* Navigacija */
-import LoadingSpinner from "./LoadingSpinner";
 
+import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
+
+import { useNavigate } from "react-router-dom"; /* Navigacija */
 
 const Predmeti = () => {
-  /* Deklarisanje promenljivih */
+  /* Deklarisanje konstanta */
   const [predmeti, setPredmeti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  /* Izvlačenje tokene iz kolačića */
+  const allCookies = document.cookie;
+  const currentToken = allCookies.split("=")[1];
+
+  const navigate = useNavigate(); /* Navigacija */
 
   /* getPredmeti */
   useEffect(() => { /* "useEffect is a React Hook that lets you synchronize a component with an external system." */
@@ -18,13 +26,24 @@ const Predmeti = () => {
       /* Try-catch za hvatanje grešaka */
       try {
         console.log("Slanje GET zahteva.");
-        const response = await fetch("http://100.71.17.102:5000/getPredmeti"); /* GET request */
+        /* GET request */
+        const response = await fetch("http://100.71.17.102:5005/getPredmeti", {
+          method: "GET",
+          headers: {
+            "Authorization": `${currentToken}`
+        }});
+        const data = await response.json();
+        /* Šalje na login ako korisnik nije ulogovan */
+        if (!data.success) {
+          console.log("Korisnik nije ulogovan. Prosleđujem na login starnicu.");
+          navigate("/login"); 
+          return;
+        }
         if (!response.ok) {
           throw new Error("Ne mogu da dobijem podatke o predmetima.");
         }
-        const data = await response.json();
         console.log("Podaci dobijeni:", data);
-        setPredmeti(data); /* Učitavanje dobijenih podataka u konstantu */
+        setPredmeti(data.predmeti); /* Učitavanje dobijenih podataka u konstantu */
       } catch (error) {
         console.error("Greška pri učitavanju podataka:", error);
         setError(error.message); /* Učitavanje greške u konstantu */
@@ -34,7 +53,7 @@ const Predmeti = () => {
     };
 
     fetchPredmeti(); /* Pozivanje same funkcije */
-  }, []);
+  }, [navigate]);
 
   /* Prikazivanje animacije učitavanja */
   if (loading) {

@@ -1,21 +1,62 @@
-import React, { useState } from "react"; /* React */
+import React, { useEffect, useState } from "react"; /* React */
 
-import { Button, Form, Container } from "react-bootstrap"; /* Bootstrap objekti */
+import { Button, Form, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { useNavigate } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
 
+import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
+
 const Login = () => {
-  /* Deklarisanje promenljivih */
+  /* Deklarisanje konstanta */
   const [korisnicko_ime, setKorisnicko_ime] = useState("");
   const [sifra, setSifra] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [userChecked, setUserChecked] = useState(false);
 
-  const navigate = useNavigate(); /* Navigacija bez interakcije korisnika */
+  /* Izvlačenje tokena iz kolačića */
+  const allCookies = document.cookie;
+  const currentToken = allCookies.split("=")[1];
 
+  const navigate = useNavigate(); /* Navigacija */
+
+  useEffect(() => {
+    /* Provera da li je korisnik trenutno ulogovan */
+    const tokenProvera = async () => {
+      try {
+        const response = await fetch("http://100.71.17.102:5005/tokenProvera", {
+          method: "GET",
+          headers: {
+            Authorization: `${currentToken}`,
+          },
+        });
+        const data = await response.json();
+        if (data.success) {
+          navigate("/");
+          return;
+        }
+      } catch (error) {
+        console.error("Greša pri proveri tokena:", error);
+      } finally {
+        setLoading(false);
+        setUserChecked(true);
+      }
+    };
+
+    tokenProvera();
+  }, [navigate]);
+
+  /* Prikazivanje animacije učitavanja */
+  if (loading || !userChecked) {
+    return <LoadingSpinner />;
+  }
+
+  /* Funkcija koje se pokreće klikom na dugme */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /* Proverava da li su oba polja popunjena */
+    /* Prikazivanje greške prilikom unosa podataka */
     if (!korisnicko_ime.trim() || !sifra.trim()) {
       setErrorMessage("Oba polja moraju biti popunjena.");
       return;
@@ -25,7 +66,9 @@ const Login = () => {
     formData.append("korisnicko_ime", korisnicko_ime);
     formData.append("sifra", sifra);
 
+    /* loginKorisnik */
     try {
+      /* POST request */
       const response = await fetch("http://100.71.17.102:5000/loginKorisnik", {
         method: "POST",
         headers: {
@@ -35,17 +78,15 @@ const Login = () => {
       });
 
       const data = await response.json();
-
+      
+      /* Šalje korisnika na glavnu stranicu ako je uspešnp ulogovan */
       if (response.ok) {
         document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
-        console.log("Login successful", data);
-
-        navigate("/"); /* Šalje na glavnu stranicu kada je login uspešan */
+        navigate("/");
       } else {
         setErrorMessage(data.message || "Login failed");
       }
     } catch (error) {
-      console.error("Error logging in:", error);
       setErrorMessage("An error occurred during login");
     }
   };
@@ -56,11 +97,21 @@ const Login = () => {
       <Form onSubmit={handleSubmit}>
         <Form.Group controlId="formEmail">
           <Form.Label>Korisničko ime</Form.Label>
-          <Form.Control type="text" placeholder="Unesite korisničko ime" value={korisnicko_ime} onChange={(e) => setKorisnicko_ime(e.target.value)}/>
+          <Form.Control
+            type="text"
+            placeholder="Unesite korisničko ime"
+            value={korisnicko_ime}
+            onChange={(e) => setKorisnicko_ime(e.target.value)}
+          />
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Šifra</Form.Label>
-          <Form.Control type="password" placeholder="Unesite šifru" value={sifra} onChange={(e) => setSifra(e.target.value)}/>
+          <Form.Control
+            type="password"
+            placeholder="Unesite šifru"
+            value={sifra}
+            onChange={(e) => setSifra(e.target.value)}
+          />
         </Form.Group>
         {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
         <Button variant="primary" type="submit">
