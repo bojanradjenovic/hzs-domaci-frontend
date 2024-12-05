@@ -94,6 +94,31 @@
   display: inline-block; /* Ograniči širinu na sadržaj */
   animation: fadeIn 0.5s ease-in-out; /* Jednostavna animacija za ulaz */
 }
+@media (min-width: 400px) {
+  .modern-login {
+    font-size: 3rem;
+  }
+}
+@media (min-width: 600px) {
+  .modern-login {
+    font-size: 4rem;
+  }
+}
+@media (min-width: 800px) {
+  .modern-login {
+    font-size: 5rem;
+  }
+}
+@media (min-width: 1000px) {
+  .modern-login {
+    font-size: 6rem;
+  }
+}
+@media (min-width: 1200px) {
+  .modern-login {
+    font-size: 7rem;
+  }
+}
 .blue-text{
   color:#0059ff;
 }
