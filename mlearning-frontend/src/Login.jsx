@@ -3,6 +3,7 @@ import { Row, Col } from "react-bootstrap";
 import { Button, Form, Container, Spinner } from "react-bootstrap"; /* Bootstrap objekti */
 import { useNavigate, NavLink } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
+import './GeneralnoCard.css' /* CSS */
 
 const Login = () => {
   /* Deklarisanje konstanta */

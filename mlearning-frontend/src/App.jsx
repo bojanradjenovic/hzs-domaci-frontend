@@ -9,6 +9,7 @@ import Lekcije from './Lekcije';
 import Login from './Login';
 import Logout from './Logout';
 import Signup from './Signup';
+import Lekcija from './Lekcija';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <Signup />
+  },
+  {
+    path: "/lekcija/:idLekcije",
+    element: <Lekcija />
   }
 ]);
 

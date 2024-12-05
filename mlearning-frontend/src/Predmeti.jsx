@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Button, Container, Alert, Navbar, Dropdown } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink, useNavigate } from "react-router-dom"; /* Navigacija */
 
@@ -39,7 +39,7 @@ const Predmeti = () => {
           return;
         }
         if (!response.ok) {
-          throw new Error("Ne mogu da dobijem podatke o predmetima.");
+          throw new Error(data.message || "Ne mogu da dobijem podatke o predmetima.");
         }
         console.log("Podaci dobijeni:", data);
         setKorisnickoIme(data.korisnicko_ime);
@@ -87,6 +87,7 @@ const Predmeti = () => {
           </NavLink>
         </Container>
       </Navbar>
+
       {/* Glavni deo */}
       <div
         style={{
