@@ -110,11 +110,11 @@ const Lekcije = () => {
                 <Card.Body>
                   <Card.Title className="fw-bold">{lekcija.naziv}</Card.Title>
                   <Card.Text>{lekcija.opis}</Card.Text>
-                  <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
+                  <Link to={`/lekcija/${lekcija.id_lekcije}`}>
                     <Button variant="primary">
                       Pogledaj lekciju
                     </Button>
-                  </NavLink>
+                  </Link>
                 </Card.Body>
               </Card>
             </Col>
