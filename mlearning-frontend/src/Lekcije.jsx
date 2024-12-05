@@ -18,7 +18,7 @@ const Lekcije = () => {
   useEffect(() => {
     const fetchLekcije = async () => {
       try {
-        const response = await fetch(`http://vm.radjenovic.dev/api/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
+        const response = await fetch(`https://vm.radjenovic.dev/api/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

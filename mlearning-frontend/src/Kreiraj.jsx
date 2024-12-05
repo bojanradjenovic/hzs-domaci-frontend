@@ -20,7 +20,7 @@ const Kreiraj = () => {
   useEffect(() => {
     const tokenProvera = async () => {
       try {
-        const response = await fetch("http://vm.radjenovic.dev/api/tokenProvera", {
+        const response = await fetch("https://vm.radjenovic.dev/api/tokenProvera", {
           method: "GET",
           headers: {
             Authorization: `${currentToken}`,

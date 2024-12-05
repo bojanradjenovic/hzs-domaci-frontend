@@ -18,7 +18,7 @@ const Oblasti = () => {
   useEffect(() => {
     const fetchOblasti = async () => {
       try {
-        const response = await fetch(`http://vm.radjenovic.dev/api/getOblasti?id_predmeta=${idPredmeta.idPredmeta}`, {
+        const response = await fetch(`https://vm.radjenovic.dev/api/getOblasti?id_predmeta=${idPredmeta.idPredmeta}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
