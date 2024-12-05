@@ -12,8 +12,13 @@ import Signup from './Signup';
 import Lekcija from './Lekcija';
 import Kreiraj from './Kreiraj';
 import Izmeni from './Izmeni';
+import NotFound from './NotFound';
 
 const router = createBrowserRouter([
+  {
+    path: "*",
+    element: <NotFound />
+  },
   {
     path: "/",
     element: <Predmeti />

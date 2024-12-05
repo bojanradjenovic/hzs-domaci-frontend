@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
 import { useNavigate, useParams, NavLink } from 'react-router-dom';
 
@@ -16,6 +16,31 @@ const Kreiraj = () => {
 
   const allCookies = document.cookie;
   const currentToken = allCookies.split("=")[1];
+
+  useEffect(() => {
+    const tokenProvera = async () => {
+      try {
+        const response = await fetch("http://100.71.17.101:5000/tokenProvera", {
+          method: "GET",
+          headers: {
+            Authorization: `${currentToken}`,
+          },
+        });
+        const data = await response.json();
+        if (!data.success) {
+          navigate("/login");
+          return;
+        }
+      } catch (error) {
+        console.error("Greša pri proveri tokena:", error);
+      } finally {
+        setLoading(false);
+        setUserChecked(true);
+      }
+    };
+
+    tokenProvera();
+  }, [navigate]);
 
   const handleChange = (value, field) => {
     setLekcija({
@@ -51,6 +76,10 @@ const Kreiraj = () => {
       });
 
       const data = await response.json();
+
+      if(!data.success) {
+        navigate("/login")
+      }
 
       if (!response.ok) {
         setErrorMessage(data.message || 'Došlo je do greške prilikom kreiranja lekcije.');
