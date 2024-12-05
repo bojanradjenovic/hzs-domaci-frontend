@@ -45,7 +45,7 @@ const Kreiraj = () => {
     console.log(formData.toString());
 
     try {
-      const response = await fetch('http://100.71.17.102:5000/createLekcija', {
+      const response = await fetch('http://100.71.17.101:5000/createLekcija', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

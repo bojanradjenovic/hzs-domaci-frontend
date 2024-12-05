@@ -26,7 +26,7 @@ const Predmeti = () => {
       try {
         console.log("Slanje GET zahteva.");
         /* GET request */
-        const response = await fetch("http://100.71.17.102:5000/getPredmeti", {
+        const response = await fetch("http://100.71.17.101:5000/getPredmeti", {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
@@ -91,7 +91,7 @@ const Predmeti = () => {
       {/* Glavni deo */}
       <div
         style={{
-          backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+          backgroundImage: 'url(../assets/blurovana2.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           minHeight: '100vh',

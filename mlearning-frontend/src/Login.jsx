@@ -71,7 +71,7 @@ const Login = () => {
     /* loginKorisnik */
     try {
       /* POST request */
-      const response = await fetch("http://100.71.17.102:5000/loginKorisnik", {
+      const response = await fetch("http://100.71.17.101:5000/loginKorisnik", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
