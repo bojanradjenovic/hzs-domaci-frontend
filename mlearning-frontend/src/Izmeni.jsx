@@ -16,7 +16,6 @@ const Izmeni = () => {
   const navigate = useNavigate();
   const { idLekcije } = useParams();
 
-  // Fetch the lesson data
   useEffect(() => {
     const fetchLekcija = async () => {
       try {
@@ -46,7 +45,6 @@ const Izmeni = () => {
     fetchLekcija();
   }, [idLekcije, currentToken, navigate]);
 
-  // Handle form submission to modify the lesson
   const handleUpdate = async (e) => {
     e.preventDefault();
 
@@ -69,7 +67,7 @@ const Izmeni = () => {
       const data = await response.json();
       if (response.ok && data.success) {
         setSuccess("Lesson updated successfully!");
-        setTimeout(() => navigate(`/lekcija/${idLekcije}`), 2000); // Redirect after success
+        setTimeout(() => navigate(`/lekcija/${idLekcije}`), 2000);
       } else {
         throw new Error(data.message || "Failed to update lesson.");
       }
@@ -103,60 +101,62 @@ const Izmeni = () => {
           </NavLink>
         </Container>
       </Navbar>
-      <div style={{backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-
-      }}>
-      <Container className="izmeni">
-        <h1 className="fw-bold">Izmeni Lekciju</h1>
-        {success && <Alert variant="success">{success}</Alert>}
-        <Form onSubmit={handleUpdate}>
-          <Form.Group className="mb-3" controlId="formNaziv">
-            <Form.Label>Naziv</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Unesite naziv lekcije"
-              value={lekcija.naziv || ""}
-              onChange={(e) => setLekcija({ ...lekcija, naziv: e.target.value })}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formOpis">
-            <Form.Label>Opis</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              placeholder="Unesite opis lekcije"
-              value={lekcija.opis || ""}
-              onChange={(e) => setLekcija({ ...lekcija, opis: e.target.value })}
-              required
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formSadrzaj">
-            <Form.Label>Sadržaj</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="Unesite sadržaj lekcije"
-              value={lekcija.sadrzaj || ""}
-              onChange={(e) => setLekcija({ ...lekcija, sadrzaj: e.target.value })}
-              required
-            />
-          </Form.Group>
-          <Button variant="primary" type="submit" className="me-2">
-            Izmeni
-          </Button>
-          <NavLink to={`/lekcija/${idLekcije}`}>
-            <Button variant="secondary">Nazad</Button>
-          </NavLink>
-        </Form>
-      </Container>
+      <div
+        style={{
+          backgroundImage: 'url(../assets/blurovana2.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Container className="izmeni">
+          <h1 className="fw-bold">Izmeni Lekciju</h1>
+          {success && <Alert variant="success">{success}</Alert>}
+          <Form onSubmit={handleUpdate}>
+            <Form.Group className="mb-3" controlId="formNaziv">
+              <Form.Label>Naziv</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Unesite naziv lekcije"
+                value={lekcija.naziv || ""}
+                onChange={(e) => setLekcija({ ...lekcija, naziv: e.target.value })}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formOpis">
+              <Form.Label>Opis</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                placeholder="Unesite opis lekcije"
+                value={lekcija.opis || ""}
+                onChange={(e) => setLekcija({ ...lekcija, opis: e.target.value })}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formSadrzaj">
+              <Form.Label>Sadržaj</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={6}
+                placeholder="Unesite sadržaj lekcije"
+                value={lekcija.sadrzaj || ""}
+                onChange={(e) => setLekcija({ ...lekcija, sadrzaj: e.target.value })}
+                required
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit" className="me-2">
+              Izmeni
+            </Button>
+            <NavLink to={`/lekcija/${idLekcije}`}>
+              <Button variant="secondary">Nazad</Button>
+            </NavLink>
+          </Form>
+        </Container>
       </div>
     </>
   );

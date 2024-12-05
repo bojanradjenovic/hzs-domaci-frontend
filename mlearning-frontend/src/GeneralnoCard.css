@@ -94,9 +94,15 @@
   display: inline-block; /* Ograniči širinu na sadržaj */
   animation: fadeIn 0.5s ease-in-out; /* Jednostavna animacija za ulaz */
 }
+@media (min-width: 300px) {
+  .modern-login {
+    font-size: 2rem;
+  }
+
+}
 @media (min-width: 400px) {
   .modern-login {
-    font-size: 3rem;
+    font-size: 1.5rem;
   }
 }
 @media (min-width: 600px) {

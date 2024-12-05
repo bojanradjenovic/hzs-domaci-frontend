@@ -1,169 +1,162 @@
-import React, { useEffect, useState } from "react"; /* React */
-import { Row, Col } from "react-bootstrap";
-import { Button, Form, Container, Spinner } from "react-bootstrap"; /* Bootstrap objekti */
-import { useNavigate, NavLink } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
-import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
-import './GeneralnoCard.css' /* CSS */
+import React, { useEffect, useState } from "react";
+import { Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
-const Login = () => {
-  /* Deklarisanje konstanta */
-  const [korisnicko_ime, setKorisnicko_ime] = useState("");
-  const [sifra, setSifra] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [error, setError] = useState(null);
+const Lekcija = () => {
+  const [korisnickoIme, setKorisnickoIme] = useState("");
+  const [lekcija, setLekcija] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [userChecked, setUserChecked] = useState(false);
-  const [buttonLoading, setButtonLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  /* Izvlačenje tokena iz kolačića */
   const allCookies = document.cookie;
   const currentToken = allCookies.split("=")[1];
 
-  const navigate = useNavigate(); /* Navigacija */
+  const navigate = useNavigate();
+  const { idLekcije } = useParams();
 
   useEffect(() => {
-    /* Provera da li je korisnik trenutno ulogovan */
-    const tokenProvera = async () => {
+    const checkIfAdmin = async () => {
       try {
-        const response = await fetch("http://100.71.17.101:5000/tokenProvera", {
+        const response = await fetch("http://100.71.17.101:5000/checkIfAdmin", {
           method: "GET",
           headers: {
-            Authorization: `${currentToken}`,
-          },
+            "Authorization": `${currentToken}`
+          }
         });
         const data = await response.json();
-        if (data.success) {
-          navigate("/");
-          return;
+        if (response.ok && data.success) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
         }
       } catch (error) {
-        console.error("Greša pri proveri tokena:", error);
-      } finally {
-        setLoading(false);
-        setUserChecked(true);
+        console.error("Error checking admin status:", error);
       }
     };
 
-    tokenProvera();
-  }, [navigate]);
+    checkIfAdmin();
+  }, [currentToken]);
 
-  /* Prikazivanje animacije učitavanja */
-  if (loading || !userChecked) {
-    return <LoadingSpinner />;
-  }
+  useEffect(() => {
+    const fetchLekcija = async () => {
+      try {
+        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
+          method: "GET",
+          headers: {
+            "Authorization": `${currentToken}`
+          }
+        });
+        const data = await response.json();
+        if (!data.success) {
+          navigate("/login");
+          return;
+        }
+        if (!response.ok) {
+          throw new Error("Unable to fetch lesson data.");
+        }
+        setKorisnickoIme(data.korisnicko_ime);
+        setLekcija(data.lekcija);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  /* Funkcija koje se pokreće klikom na dugme */
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    fetchLekcija();
+  }, [idLekcije, currentToken]);
 
-    /* Prikazivanje greške prilikom unosa podataka */
-    if (!korisnicko_ime.trim() || !sifra.trim()) {
-      setErrorMessage("Oba polja moraju biti popunjena.");
-      return;
-    }
-
-    setButtonLoading(true);
-
+  const handleDelete = async () => {
     const formData = new URLSearchParams();
-    formData.append("korisnicko_ime", korisnicko_ime);
-    formData.append("sifra", sifra);
+    formData.append("id_lekcije", idLekcije);
 
-    /* loginKorisnik */
     try {
-      /* POST request */
-      const response = await fetch("http://100.71.17.101:5000/loginKorisnik", {
+      const response = await fetch("http://100.71.17.101:5000/deleteLekcija", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": `${currentToken}`
         },
-        body: formData.toString(),
+        body: formData.toString()
       });
-
       const data = await response.json();
-      
-      /* Šalje korisnika na glavnu stranicu ako je uspešnp ulogovan */
-      if(!response.ok) {
-        setErrorMessage(data.message || "Login failed");
-        return;
+      if (response.ok && data.success) {
+        alert("Lekcija uspešno obrisana!");
+        navigate(`/oblast/${lekcija.id_oblasti}`);
+      } else {
+        alert("Greška pri brisanju lekcije: " + data.message);
       }
-
-      document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
-      navigate("/");
     } catch (error) {
-      setErrorMessage("An error occurred during login");
-    } finally {
-      setButtonLoading(false); // Stop button loading animation
+      console.error("Error deleting lesson:", error);
+      alert("Greška pri brisanju lekcije.");
     }
   };
 
-  return (
-    <div
-      style={{
-        backgroundImage: 'url(../assets/knjige2.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <Container className="login-container">
-        <h2 className="modern-login">
-          <span className="blue-text">m</span>Learning
-          <span className="log">.Login</span>
-        </h2>
-        <Row className="justify-content-left">
-          <Col xs={12} sm={8} md={6} lg={6}>
-            <Form onSubmit={handleSubmit} className="login-form">
-              <Form.Group controlId="formEmail">
-                <Form.Label>Korisničko ime</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Unesite korisničko ime"
-                  value={korisnicko_ime}
-                  onChange={(e) => setKorisnicko_ime(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group controlId="formPassword">
-                <Form.Label style={{marginTop:'10px'}}>Šifra</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Unesite šifru"
-                  value={sifra}
-                  onChange={(e) => setSifra(e.target.value)}
-                />
-              </Form.Group>
-              <NavLink to="/signup" style={{ fontSize: '14px'
-               }}>Nemate nalog? Registrujte se!</NavLink>
-              {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
-              <Button
-                variant="primary"
-                type="submit"
-                className="submit-btn"
-                disabled={buttonLoading}
-              >
-                {buttonLoading ? (
-                  <>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    <span className="visually-hidden">Loading...</span>
-                  </>
-                ) : (
-                  "Login"
-                )}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return (
+      <Container className="d-flex justify-content-center align-items-center vh-100">
+        <Alert variant="danger">{error}</Alert>
       </Container>
-    </div>
+    );
+  }
+
+  return (
+    <>
+      <Navbar bg="light" expand="lg" className="justify-content-between">
+        <Container fluid>
+          <Navbar.Text className="me-auto">Zdravo, {korisnickoIme}</Navbar.Text>
+          <NavLink to="/" className="mx-auto">
+            <Navbar.Brand className="ime">
+              <span className="blue-text">m</span>Learning
+            </Navbar.Brand>
+          </NavLink>
+          <NavLink to="/logout" className="ms-auto">
+            Log out
+          </NavLink>
+        </Container>
+      </Navbar>
+      <div
+        style={{
+          backgroundImage: 'url(../assets/blurovana2.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Container className="lekcija d-flex flex-column align-items-center justify-content-center">
+          <Row>
+            <Col>
+              <h1 className="fw-bold">{lekcija.naziv}</h1>
+              <p>{lekcija.sadrzaj}</p>
+              <div>
+                <NavLink to={`/oblast/${lekcija.id_oblasti}`}>
+                  <Button variant="primary" className="me-2">Nazad</Button>
+                </NavLink>
+                {isAdmin && (
+                  <>
+                    <NavLink to={`/izmeni/${idLekcije}`}>
+                      <Button variant="warning" className="me-2">Izmeni</Button>
+                    </NavLink>
+                    <Button variant="danger" onClick={handleDelete}>Obriši</Button>
+                  </>
+                )}
+              </div>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 };
 
-export default Login;
+export default Lekcija;
