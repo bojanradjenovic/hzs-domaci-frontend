@@ -25,7 +25,7 @@ const Predmeti = () => {
   useEffect(() => {
     const fetchPredmeti = async () => {
       try {
-        const response = await fetch("http://100.71.17.101:5000/getPredmeti", {
+        const response = await fetch("http://vm.radjenovic.dev/api/getPredmeti", {
           method: "GET",
           headers: {
             Authorization: `${currentToken}`,

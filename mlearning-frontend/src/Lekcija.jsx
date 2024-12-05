@@ -73,7 +73,7 @@ const Lekcija = () => {
     formData.append("id_lekcije", idLekcije);
 
     try {
-      const response = await fetch("http://100.71.17.101:5000/deleteLekcija", {
+      const response = await fetch("http://vm.radjenovic.dev/api/deleteLekcija", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",

@@ -21,7 +21,7 @@ const Login = () => {
   useEffect(() => {
     const tokenProvera = async () => {
       try {
-        const response = await fetch("http://100.71.17.101:5000/tokenProvera", {
+        const response = await fetch("http://vm.radjenovic.dev/api/tokenProvera", {
           method: "GET",
           headers: {
             Authorization: `${currentToken}`,

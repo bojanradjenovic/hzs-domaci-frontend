@@ -19,7 +19,7 @@ const Izmeni = () => {
   useEffect(() => {
     const fetchLekcija = async () => {
       try {
-        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
+        const response = await fetch(`http://vm.radjenovic.dev/api/getLekcija?id_lekcije=${idLekcije}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

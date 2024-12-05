@@ -61,7 +61,7 @@ const Signup = () => {
     formData.append("sifra", sifra);
 
     try {
-      const response = await fetch("http://100.71.17.101:5000/registerKorisnik", {
+      const response = await fetch("http://vm.radjenovic.dev/api/registerKorisnik", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
