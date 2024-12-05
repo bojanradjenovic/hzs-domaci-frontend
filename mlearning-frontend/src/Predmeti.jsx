@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Button, Container, Alert, Navbar, Dropdown } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink, useNavigate } from "react-router-dom"; /* Navigacija */
 
@@ -82,11 +82,26 @@ const Predmeti = () => {
               mLearning
             </Navbar.Brand>
           </NavLink>
-          <NavLink to="/logout" className="ms-auto">
-            Log out
-          </NavLink>
+
+          {/* Dropdown for the right side */}
+          <Dropdown className="ms-auto">
+            <Dropdown.Toggle variant="secondary" id="dropdown-custom-components">
+              Menu
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Dropdown.Item as={NavLink} to="/kreiraj">
+                Kreiraj
+              </Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item as={NavLink} to="/logout">
+                Log out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         </Container>
       </Navbar>
+
       {/* Glavni deo */}
       <div
         style={{
