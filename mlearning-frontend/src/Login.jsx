@@ -83,6 +83,7 @@ const Login = () => {
       /* Šalje korisnika na glavnu stranicu ako je uspešnp ulogovan */
       if(!response.ok) {
         setErrorMessage(data.message || "Login failed");
+        return;
       }
 
       document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
