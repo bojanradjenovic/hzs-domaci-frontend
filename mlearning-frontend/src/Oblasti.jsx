@@ -28,7 +28,7 @@ const Oblasti = () => {
       try {
         console.log(`Slanje GET zahteva.`);
         /* GET request */
-        const response = await fetch(`http://100.71.17.101:5000/getOblasti?id_predmeta=${idPredmeta.idPredmeta}`, {
+        const response = await fetch(`http://100.71.17.102:5000/getOblasti?id_predmeta=${idPredmeta.idPredmeta}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

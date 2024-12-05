@@ -19,7 +19,7 @@ const Lekcija = () => {
     const fetchLekcija = async () => {
       try {
         console.log("Sending GET request.");
-        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
+        const response = await fetch(`http://100.71.17.102:5000/getLekcija?id_lekcije=${idLekcije}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

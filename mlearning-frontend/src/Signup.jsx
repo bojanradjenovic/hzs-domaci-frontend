@@ -28,7 +28,7 @@ const Signup = () => {
     formData.append("sifra", sifra);
 
     try {
-      const response = await fetch("http://100.71.17.101:5000/registerKorisnik", {
+      const response = await fetch("http://100.71.17.102:5000/registerKorisnik", {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -39,7 +39,7 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert('Lekcija uspešno kreirana!');
+        alert('Nalog uspešno kreiran!');
         setSuccessMessage(data.message || "Uspešno registrovan!");
         setKorisnickoIme("");
         setSifra("");

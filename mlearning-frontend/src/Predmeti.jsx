@@ -26,7 +26,7 @@ const Predmeti = () => {
       try {
         console.log("Slanje GET zahteva.");
         /* GET request */
-        const response = await fetch("http://100.71.17.101:5000/getPredmeti", {
+        const response = await fetch("http://100.71.17.102:5000/getPredmeti", {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
@@ -35,7 +35,7 @@ const Predmeti = () => {
         /* Šalje na login ako korisnik nije ulogovan */
         if (!data.success) {
           console.log("Korisnik nije ulogovan. Prosleđujem na login starnicu.");
-          navigate("/login"); 
+          navigate("/login");
           return;
         }
         if (!response.ok) {
