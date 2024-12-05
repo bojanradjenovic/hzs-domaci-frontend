@@ -25,7 +25,7 @@ const Login = () => {
     /* Provera da li je korisnik trenutno ulogovan */
     const tokenProvera = async () => {
       try {
-        const response = await fetch("http://100.71.17.102:5005/tokenProvera", {
+        const response = await fetch("http://100.71.17.101:5000/tokenProvera", {
           method: "GET",
           headers: {
             Authorization: `${currentToken}`,

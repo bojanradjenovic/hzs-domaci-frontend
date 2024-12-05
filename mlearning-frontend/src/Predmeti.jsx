@@ -26,7 +26,7 @@ const Predmeti = () => {
       try {
         console.log("Slanje GET zahteva.");
         /* GET request */
-        const response = await fetch("http://100.71.17.102:5005/getPredmeti", {
+        const response = await fetch("http://100.71.17.101:5000/getPredmeti", {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

@@ -28,7 +28,7 @@ const Lekcije = () => {
       try {
         console.log("Slanje GET zahteva.");
         /* GET request */
-        const response = await fetch(`http://100.71.17.102:5005/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
+        const response = await fetch(`http://100.71.17.101:5000/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
