@@ -106,17 +106,17 @@
 }
 @media (min-width: 800px) {
   .modern-login {
-    font-size: 5rem;
-  }
-}
-@media (min-width: 1000px) {
-  .modern-login {
-    font-size: 6rem;
+    font-size: 3.5rem;
   }
 }
 @media (min-width: 1200px) {
   .modern-login {
-    font-size: 7rem;
+    font-size: 3.5rem;
+  }
+}
+@media (min-width: 1400px) {
+  .modern-login {
+    font-size: 4.5rem;
   }
 }
 .blue-text{
@@ -224,4 +224,76 @@
     font-size: 1rem; /* Manji font za dugme na manjim ekranima */
   }
 }
+.signup-container {
+  max-width: 200px; /* Maksimalna širina za formu */
+  margin: 0px auto; /* Centriraj formu */
+  padding: 10px; /* Unutrašnji razmak */
+  background-color: #f7f9fc; /* Svetla pozadina */
+  border-radius: 8px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Blaga senka */
+}
+@media (max-width: 768px) {
+  .signup-container {
+    max-width: 300px; /* Manja širina na manjim ekranima */
+  }
+}
 
+@media (max-width: 480px) {
+  .signup-container {
+    max-width: 260px; /* Još manja širina za mobilne uređaje */
+  }
+}
+/* Naslov */
+.signup-container h2 {
+  font-family: 'Roboto', sans-serif; /* Moderni font */
+  color: #333; /* Tamna boja za tekst */
+  margin-bottom: 20px; /* Razmak od formulara */
+}
+
+/* Input polja */
+.input2-field {
+  border-radius: 5px; /* Zaobljeni uglovi */
+  border: 1px solid #ddd; /* Svetlo siva ivica */
+  background-color: #fff; /* Belo pozadinsko polje */
+  padding: 10px; /* Unutrašnji razmak */
+  font-size: 1rem; /* Srednja veličina fonta */
+  margin-bottom: 15px; /* Razmak između polja */
+  transition: all 0.3s ease; /* Glatka animacija za hover i focus */
+}
+
+/* Efekat fokusa na input polju */
+.input2-field:focus {
+  border-color: rgb(68, 81, 190); /* Plavi okvir pri fokusu */
+  box-shadow: 0 0 5px rgb(51, 64, 182); /* Blaga senka oko inputa */
+  outline: none; /* Ukloni standardni outline */
+}
+
+/* Dugme */
+.submit2-btn {
+  width: 100%; /* Dugme zauzima celu širinu */
+  padding: 10px; /* Unutrašnji razmak */
+  border-radius: 5px; /* Zaobljeni uglovi */
+  font-size: 1.2rem; /* Veći font */
+  font-weight: bold; /* Podebljan font */
+  background-color: rgb(64, 76, 187); /* Plava boja pozadine */
+  color: #fff; /* Bela boja teksta */
+  border: none; /* Ukloni ivicu dugmeta */
+  transition: all 0.3s ease; /* Glatka animacija */
+  margin-bottom: 30px;
+}
+
+/* Hover efekat na dugme */
+.submit2-btn:hover {
+  background-color: #0059ff;; /* Tamnija plava na hover */
+  cursor: pointer; /* Prikazuje pointer kursor na hover */
+}
+
+@media (max-width: 600px) {
+  .signup-container {
+    padding: 20px; /* Manji padding za mobilne uređaje */
+  }
+
+  .submit2-btn {
+    font-size: 1rem; /* Manji font za dugme na manjim ekranima */
+  }
+}

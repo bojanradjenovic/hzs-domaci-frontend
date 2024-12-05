@@ -125,7 +125,7 @@ const Login = () => {
                 />
               </Form.Group>
               <Form.Group controlId="formPassword">
-                <Form.Label>Šifra</Form.Label>
+                <Form.Label style={{marginTop:'10px'}}>Šifra</Form.Label>
                 <Form.Control
                   type="password"
                   placeholder="Unesite šifru"
@@ -133,7 +133,8 @@ const Login = () => {
                   onChange={(e) => setSifra(e.target.value)}
                 />
               </Form.Group>
-              <NavLink to="/signup">Nemate nalog? Kliknite ovde kako biste ga napravili!</NavLink>
+              <NavLink to="/signup" style={{ fontSize: '14px'
+               }}>Nemate nalog? Registrujte se!</NavLink>
               {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
               <Button
                 variant="primary"
