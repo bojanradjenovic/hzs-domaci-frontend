@@ -315,3 +315,11 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Blaga senka za dubinu */
   
 }
+.izmeni {
+  max-width: 200px; /* Maksimalna širina za formu */
+  margin: 0px auto; /* Centriraj formu */
+  padding: 10px; /* Unutrašnji razmak */
+  background-color: #f7f9fc; /* Svetla pozadina */
+  border-radius: 8px; /* Zaobljeni uglovi */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Blaga senka */
+}

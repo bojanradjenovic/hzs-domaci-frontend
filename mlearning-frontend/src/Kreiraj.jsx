@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import { Button, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Button, Form, Container, Row, Col, Spinner} from 'react-bootstrap';
+import { useNavigate, useParams, NavLink } from 'react-router-dom';
+
+
+
 
 const Kreiraj = () => {
+ 
   const [lekcija, setLekcija] = useState({
     naziv: '',
     opis: '',
@@ -73,8 +77,18 @@ const Kreiraj = () => {
   };
 
   return (
-    <Container className="my-5">
-      <h2>Kreiraj Lekciju</h2>
+    <>
+    <div style={{backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        }}>
+    <Container className="izmeni">
+      <h2 ><b>Kreiraj Lekciju</b></h2>
       {errorMessage && <p className="text-danger">{errorMessage}</p>}
       <Form onSubmit={handleSubmit}>
         <Row>
@@ -130,8 +144,13 @@ const Kreiraj = () => {
             'Kreiraj'
           )}
         </Button>
+        <NavLink to={`/oblast/${idOblasti}`}>
+            <Button variant="primary" className="mt-3 ms-3" >Nazad</Button>
+          </NavLink>
       </Form>
     </Container>
+    </div>
+    </>
   );
 };
 

@@ -141,7 +141,7 @@ const Lekcija = () => {
       <Container className="lekcija d-flex flex-column align-items-center justify-content-center">
         <Row>
           <Col>
-            <h1 className="fw-bold">{lekcija.naziv}</h1>
+            <h1 className="fw-bold">{(lekcija.naziv)}</h1>
             <p>{lekcija.sadrzaj}</p>
             <div>
               <NavLink to={`/oblast/${lekcija.id_oblasti}`}>

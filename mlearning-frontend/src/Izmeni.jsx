@@ -103,8 +103,17 @@ const Izmeni = () => {
           </NavLink>
         </Container>
       </Navbar>
+      <div style={{backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
 
-      <Container className="mt-4">
+      }}>
+      <Container className="izmeni">
         <h1 className="fw-bold">Izmeni Lekciju</h1>
         {success && <Alert variant="success">{success}</Alert>}
         <Form onSubmit={handleUpdate}>
@@ -148,6 +157,7 @@ const Izmeni = () => {
           </NavLink>
         </Form>
       </Container>
+      </div>
     </>
   );
 };
