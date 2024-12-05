@@ -28,7 +28,7 @@ const Lekcije = () => {
       try {
         console.log("Slanje GET zahteva.");
         /* GET request */
-        const response = await fetch(`http://100.71.17.102:5005/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
+        const response = await fetch(`http://100.71.17.101:5000/getLekcije?id_oblasti=${idOblasti.idOblasti}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
@@ -77,10 +77,10 @@ const Lekcije = () => {
       {/* Navbar deo */}
       <Navbar bg="light" expand="lg" className="justify-content-between">
         <Container fluid>
-          <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
+          <Navbar.Text className="me-auto">Zdravo, {korisnickoIme}</Navbar.Text>
           <NavLink to="/" className="mx-auto">
-            <Navbar.Brand>
-              mLearning
+          <Navbar.Brand className="ime">
+            <span className="blue-text">m</span>Learning
             </Navbar.Brand>
           </NavLink>
 

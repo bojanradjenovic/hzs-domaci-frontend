@@ -297,3 +297,21 @@
     font-size: 1rem; /* Manji font za dugme na manjim ekranima */
   }
 }
+.ime{
+  color:#6d6d6d;
+  font-size: 30px;
+  font-family: 'Roboto', sans-serif;
+ 
+  
+  
+}
+.lekcija {
+  
+    max-width: 500px; /* Povećana maksimalna širina za bolji izgled */
+    margin: 0 auto; /* Centriraj element horizontalno */
+    padding: 20px; /* Veći unutrašnji razmak za bolju čitljivost */
+    background-color: #f7f9fc; /* Svetla pozadina */
+    border-radius: 8px; /* Zaobljeni uglovi */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Blaga senka za dubinu */
+  
+}

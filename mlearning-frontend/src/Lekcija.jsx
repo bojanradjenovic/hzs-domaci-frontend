@@ -19,7 +19,7 @@ const Lekcija = () => {
     const fetchLekcija = async () => {
       try {
         console.log("Sending GET request.");
-        const response = await fetch(`http://100.71.17.101:5005/getLekcija?id_lekcije=${idLekcije}`, {
+        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
@@ -69,10 +69,10 @@ const Lekcija = () => {
     <>
       <Navbar bg="light" expand="lg" className="justify-content-between">
         <Container fluid>
-          <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
+          <Navbar.Text className="me-auto">Zdravo, {korisnickoIme}</Navbar.Text>
           <NavLink to="/" className="mx-auto">
-            <Navbar.Brand>
-              mLearning
+            <Navbar.Brand className="ime">
+            <span className="blue-text">m</span>Learning
             </Navbar.Brand>
           </NavLink>
           <NavLink to="/logout" className="ms-auto">
@@ -80,8 +80,20 @@ const Lekcija = () => {
           </NavLink>
         </Container>
       </Navbar>
+
       {/* Glavni deo */}
-      <Container className="mt-4">
+
+      <div style={{
+        backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      <Container className="lekcija d-flex flex-column align-items-center justify-content-center">
       <Row>
         <Col>
           <h1 className="fw-bold">{lekcija.naziv}</h1> {/* Display the title */}
@@ -92,6 +104,7 @@ const Lekcija = () => {
         </Col>
       </Row>
     </Container>
+    </div>
     </>
   );
 };
