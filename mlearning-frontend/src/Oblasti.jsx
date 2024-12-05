@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
@@ -8,6 +8,7 @@ import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
 
 const Oblasti = () => {
   /* Deklarisanje konstanta */
+  const [korisnickoIme, setKorisnickoIme] = useState("");
   const [oblasti, setOblasti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -42,6 +43,7 @@ const Oblasti = () => {
           throw new Error("Ne mogu da dobijem podatke o predmetima.");
         }
         console.log("Podaci dobijeni:", data);
+        setKorisnickoIme(data.korisnicko_ime)
         setOblasti(data.oblasti); /* Učitavanje dobijenih podataka u konstantu */
       } catch (error) {
         console.error("Greška pri učitavanju podataka:", error);
@@ -71,7 +73,23 @@ const Oblasti = () => {
   }
 
   return (
-    <div
+    <>
+      {/* Navbar deo */}
+      <Navbar bg="light" expand="lg" className="justify-content-between">
+        <Container fluid>
+          <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
+          <NavLink to="/" className="mx-auto">
+            <Navbar.Brand>
+              mLearning
+            </Navbar.Brand>
+          </NavLink>
+          <NavLink to="/logout" className="ms-auto">
+            Log out
+          </NavLink>
+        </Container>
+      </Navbar>
+      {/* Glavni deo */}
+      <div
       style={{
         backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
         backgroundSize: 'cover',
@@ -92,10 +110,7 @@ const Oblasti = () => {
                   <Card.Title className="fw-bold">{oblast.naziv}</Card.Title>
                   <Card.Text>{oblast.opis}</Card.Text>
                   <NavLink to={`/oblast/${oblast.id_oblasti}`}>
-                    <Button
-                      variant="primary"
-                      href={`/oblast/${oblast.id_oblasti}`}
-                    >
+                    <Button variant="primary">
                       Pogledaj lekcije
                     </Button>
                   </NavLink>
@@ -106,6 +121,7 @@ const Oblasti = () => {
         </Row>
       </Container>
     </div>
+    </>
   );    
 };
 

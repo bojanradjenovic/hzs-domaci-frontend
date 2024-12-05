@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"; /* React */
 
-import { Card, Row, Col, Button, Container, Alert } from "react-bootstrap"; /* Bootstrap objekti */
+import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
 
 import { NavLink } from "react-router-dom"; /* Navigacija */
 
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom"; /* Navigacija */
 
 const Predmeti = () => {
   /* Deklarisanje konstanta */
+  const [korisnickoIme, setKorisnickoIme] = useState("");
   const [predmeti, setPredmeti] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -43,6 +44,7 @@ const Predmeti = () => {
           throw new Error("Ne mogu da dobijem podatke o predmetima.");
         }
         console.log("Podaci dobijeni:", data);
+        setKorisnickoIme(data.korisnicko_ime);
         setPredmeti(data.predmeti); /* Učitavanje dobijenih podataka u konstantu */
       } catch (error) {
         console.error("Greška pri učitavanju podataka:", error);
@@ -72,38 +74,58 @@ const Predmeti = () => {
   }
 
   return (
-    <div
-      style={{
-        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-    <Container>
-      <h1 className="modern-header">Pred<span class="blue-text">m</span>eti</h1>
-      <Row xs={1} sm={2} md={3} lg={4} className="g-4">
-        {predmeti.map((predmet) => (
-          <Col key={predmet.id_predmeta}>
-            <Card className="custom-card shadow-sm">
-              <Card.Body>
-                <Card.Title className="fw-bold">{predmet.naziv}</Card.Title>
-                <Card.Text>{predmet.opis}</Card.Text>
-                <NavLink to={`/predmet/${predmet.id_predmeta}`}>
-                  <Button variant="primary" href={`/predmet/${predmet.id_predmeta}`}>
-                    Pogledaj oblasti
-                  </Button>
-                </NavLink>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
-    </Container>
-    </div>
+    <>
+      {/* Navbar deo */}
+      <Navbar bg="light" expand="lg" className="justify-content-between">
+        <Container fluid>
+          <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
+          <NavLink to="/" className="mx-auto">
+            <Navbar.Brand>
+              mLearning
+            </Navbar.Brand>
+          </NavLink>
+          <NavLink to="/logout" className="ms-auto">
+            Log out
+          </NavLink>
+        </Container>
+      </Navbar>
+      {/* Glavni deo */}
+      <div
+        style={{
+          backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          minHeight: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Container>
+          <h1 className="modern-header">
+            Pred<span className="blue-text">m</span>eti
+          </h1>
+          <Row xs={1} sm={2} md={3} lg={4} className="g-4">
+            {predmeti.map((predmet) => (
+              <Col key={predmet.id_predmeta}>
+                <Card className="custom-card shadow-sm">
+                  <Card.Body>
+                    <Card.Title className="fw-bold">{predmet.naziv}</Card.Title>
+                    <Card.Text>{predmet.opis}</Card.Text>
+                    <NavLink to={`/predmet/${predmet.id_predmeta}`}>
+                      <Button variant="primary">
+                        Pogledaj oblasti
+                      </Button>
+                    </NavLink>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      </div>
+    </>
   );
 };
 
