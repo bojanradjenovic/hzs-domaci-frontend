@@ -39,6 +39,7 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
+        alert('Lekcija uspešno kreirana!');
         setSuccessMessage(data.message || "Uspešno registrovan!");
         setKorisnickoIme("");
         setSifra("");

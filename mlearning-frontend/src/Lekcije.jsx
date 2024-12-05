@@ -91,7 +91,7 @@ const Lekcije = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item as={NavLink} to="/kreiraj">
+              <Dropdown.Item as={NavLink} to={`/kreiraj/${idOblasti.idOblasti}`}>
                 Kreiraj
               </Dropdown.Item>
               <Dropdown.Divider />

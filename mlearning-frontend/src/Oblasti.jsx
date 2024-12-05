@@ -91,7 +91,7 @@ const Oblasti = () => {
       {/* Glavni deo */}
       <div
       style={{
-        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundImage: 'url(../assets/blurovana2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         height: '100vh',

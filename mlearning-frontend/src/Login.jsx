@@ -13,7 +13,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userChecked, setUserChecked] = useState(false);
-  const [buttonLoading, setButtonLoading] = useState(false); // New state for button loading
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   /* Izvlačenje tokena iz kolačića */
   const allCookies = document.cookie;
@@ -62,7 +62,7 @@ const Login = () => {
       return;
     }
 
-    setButtonLoading(true); // Start button loading animation
+    setButtonLoading(true);
 
     const formData = new URLSearchParams();
     formData.append("korisnicko_ime", korisnicko_ime);
@@ -99,7 +99,7 @@ const Login = () => {
   return (
     <div
       style={{
-        backgroundImage: 'url(../assets/knjige2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundImage: 'url(../assets/knjige2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         height: '100vh',
@@ -140,7 +140,7 @@ const Login = () => {
                 variant="primary"
                 type="submit"
                 className="submit-btn"
-                disabled={buttonLoading} // Disable button during loading
+                disabled={buttonLoading}
               >
                 {buttonLoading ? (
                   <>
