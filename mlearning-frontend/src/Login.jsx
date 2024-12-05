@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"; /* React */
 import { Row, Col } from "react-bootstrap";
 import { Button, Form, Container, Spinner } from "react-bootstrap"; /* Bootstrap objekti */
-import { useNavigate, Link } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
+import { useNavigate, NavLink } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
 
 const Login = () => {
@@ -132,7 +132,7 @@ const Login = () => {
                   onChange={(e) => setSifra(e.target.value)}
                 />
               </Form.Group>
-              <Link to="/signup">Nemate nalog? Kliknite ovde kako biste ga napravili!</Link>
+              <NavLink to="/signup">Nemate nalog? Kliknite ovde kako biste ga napravili!</NavLink>
               {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
               <Button
                 variant="primary"

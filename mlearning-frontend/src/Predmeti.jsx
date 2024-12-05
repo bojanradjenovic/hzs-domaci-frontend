@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react"; /* React */
 
 import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
 
-import { NavLink } from "react-router-dom"; /* Navigacija */
+import { NavLink, useNavigate } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
-
-import { useNavigate } from "react-router-dom"; /* Navigacija */
 
 const Predmeti = () => {
   /* Deklarisanje konstanta */

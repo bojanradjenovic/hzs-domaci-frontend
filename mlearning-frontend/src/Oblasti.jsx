@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"; /* React */
 
 import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
 
-import { Link, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
+import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
 
@@ -78,14 +78,14 @@ const Oblasti = () => {
       <Navbar bg="light" expand="lg" className="justify-content-between">
         <Container fluid>
           <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
-          <Link to="/" className="mx-auto">
+          <NavLink to="/" className="mx-auto">
             <Navbar.Brand>
               mLearning
             </Navbar.Brand>
-          </Link>
-          <Link to="/logout" className="ms-auto">
+          </NavLink>
+          <NavLink to="/logout" className="ms-auto">
             Log out
-          </Link>
+          </NavLink>
         </Container>
       </Navbar>
       {/* Glavni deo */}
@@ -109,11 +109,11 @@ const Oblasti = () => {
                 <Card.Body>
                   <Card.Title className="fw-bold">{oblast.naziv}</Card.Title>
                   <Card.Text>{oblast.opis}</Card.Text>
-                  <Link to={`/oblast/${oblast.id_oblasti}`}>
+                  <NavLink to={`/oblast/${oblast.id_oblasti}`}>
                     <Button variant="primary">
                       Pogledaj lekcije
                     </Button>
-                  </Link>
+                  </NavLink>
                 </Card.Body>
               </Card>
             </Col>

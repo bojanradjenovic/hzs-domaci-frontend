@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"; /* React */
 
 import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap"; /* Bootstrap objekti */
 
-import { Link, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
+import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
 import './GeneralnoCard.css';
@@ -79,14 +79,14 @@ const Lekcije = () => {
       <Navbar bg="light" expand="lg" className="justify-content-between">
         <Container fluid>
           <Navbar.Text className="me-auto">Zdravo {korisnickoIme}</Navbar.Text>
-          <Link to="/" className="mx-auto">
+          <NavLink to="/" className="mx-auto">
             <Navbar.Brand>
               mLearning
             </Navbar.Brand>
-          </Link>
-          <Link to="/logout" className="ms-auto">
+          </NavLink>
+          <NavLink to="/logout" className="ms-auto">
             Log out
-          </Link>
+          </NavLink>
         </Container>
       </Navbar>
       {/* Glavni deo */}
@@ -110,11 +110,11 @@ const Lekcije = () => {
                 <Card.Body>
                   <Card.Title className="fw-bold">{lekcija.naziv}</Card.Title>
                   <Card.Text>{lekcija.opis}</Card.Text>
-                  <Link to={`/lekcija/${lekcija.id_lekcije}`}>
+                  <NavLink to={`/lekcija/${lekcija.id_lekcije}`}>
                     <Button variant="primary">
                       Pogledaj lekciju
                     </Button>
-                  </Link>
+                  </NavLink>
                 </Card.Body>
               </Card>
             </Col>
