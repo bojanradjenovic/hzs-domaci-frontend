@@ -19,7 +19,7 @@ const Lekcija = () => {
   useEffect(() => {
     const checkIfAdmin = async () => {
       try {
-        const response = await fetch("http://100.71.17.101:5000/checkIfAdmin", {
+        const response = await fetch("https://vm.radjenovic.dev/api/checkIfAdmin", {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`
@@ -42,7 +42,7 @@ const Lekcija = () => {
   useEffect(() => {
     const fetchLekcija = async () => {
       try {
-        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
+        const response = await fetch(`https://vm.radjenovic.dev/api/getLekcija?id_lekcije=${idLekcije}`, {
           method: "GET",
           headers: {
             "Authorization": `${currentToken}`

@@ -56,7 +56,7 @@ const Izmeni = () => {
       formData.append("opis", lekcija.opis);
       formData.append("sadrzaj", lekcija.sadrzaj);
 
-      const response = await fetch("http://100.71.17.101:5000/modifyLekcija", {
+      const response = await fetch("https://vm.radjenovic.dev/api/modifyLekcija", {
         method: "POST",
         headers: {
           "Authorization": `${currentToken}`
