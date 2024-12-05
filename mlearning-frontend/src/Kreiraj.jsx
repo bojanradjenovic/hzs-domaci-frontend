@@ -66,7 +66,7 @@ const Kreiraj = () => {
     formData.append('sadrzaj', lekcija.sadrzaj);
 
     try {
-      const response = await fetch('http://100.71.17.101:5000/createLekcija', {
+      const response = await fetch('vm.radjenovc.dev/api/createLekcija', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
