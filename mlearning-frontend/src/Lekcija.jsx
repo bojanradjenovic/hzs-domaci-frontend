@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Container, Alert, Navbar, Dropdown } from "react-bootstrap"; // Bootstrap components
-import { useParams, useNavigate, NavLink } from "react-router-dom"; // Navigation hooks
-import LoadingSpinner from "./LoadingSpinner"; // Loading spinner component
+import { Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap";
+import { useParams, useNavigate, NavLink } from "react-router-dom";
+import LoadingSpinner from "./LoadingSpinner";
 
 const Lekcija = () => {
   const [korisnickoIme, setKorisnickoIme] = useState("");
   const [lekcija, setLekcija] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false); // State to track admin status
 
   const allCookies = document.cookie;
   const currentToken = allCookies.split("=")[1];
@@ -15,6 +16,31 @@ const Lekcija = () => {
   const navigate = useNavigate();
   const { idLekcije } = useParams();
 
+  // Check if the user is an admin
+  useEffect(() => {
+    const checkIfAdmin = async () => {
+      try {
+        const response = await fetch("http://100.71.17.101:5000/checkIfAdmin", {
+          method: "GET",
+          headers: {
+            "Authorization": `${currentToken}`
+          }
+        });
+        const data = await response.json();
+        if (response.ok && data.success) {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+      }
+    };
+
+    checkIfAdmin();
+  }, [currentToken]);
+
+  // Fetch lesson details
   useEffect(() => {
     const fetchLekcija = async () => {
       try {
@@ -33,11 +59,9 @@ const Lekcija = () => {
         if (!response.ok) {
           throw new Error("Unable to fetch lesson data.");
         }
-        console.log("Received data:", data);
         setKorisnickoIme(data.korisnicko_ime);
-        setLekcija(data.lekcija); /* Učitavanje dobijenih podataka u konstantu */
+        setLekcija(data.lekcija);
       } catch (error) {
-        console.error("Error loading data:", error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -46,6 +70,33 @@ const Lekcija = () => {
 
     fetchLekcija();
   }, [idLekcije, currentToken]);
+
+  // Handle delete
+  const handleDelete = async () => {
+    const formData = new URLSearchParams();
+    formData.append("id_lekcije", idLekcije);
+
+    try {
+      const response = await fetch("http://100.71.17.101:5000/deleteLekcija", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          "Authorization": `${currentToken}`
+        },
+        body: formData.toString()
+      });
+      const data = await response.json();
+      if (response.ok && data.success) {
+        alert("Lekcija uspešno obrisana!");
+        navigate(`/oblast/${lekcija.id_oblasti}`);
+      } else {
+        alert("Greška pri brisanju lekcije: " + data.message);
+      }
+    } catch (error) {
+      console.error("Error deleting lesson:", error);
+      alert("Greška pri brisanju lekcije.");
+    }
+  };
 
   if (loading) {
     return <LoadingSpinner />;
@@ -56,12 +107,6 @@ const Lekcija = () => {
       <Container className="d-flex justify-content-center align-items-center vh-100">
         <Alert variant="danger">{error}</Alert>
       </Container>
-    );
-  }
-
-  if (loading) {
-    return (
-      <LoadingSpinner />
     );
   }
 
@@ -81,7 +126,7 @@ const Lekcija = () => {
         </Container>
       </Navbar>
 
-      {/* Glavni deo */}
+
 
       <div style={{
         backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
@@ -94,16 +139,26 @@ const Lekcija = () => {
         alignItems: 'center',
       }}>
       <Container className="lekcija d-flex flex-column align-items-center justify-content-center">
-      <Row>
-        <Col>
-          <h1 className="fw-bold">{lekcija.naziv}</h1> {/* Display the title */}
-          <p>{lekcija.sadrzaj}</p> {/* Display the content */}
-          <NavLink to={`/oblast/${lekcija.id_oblasti}`}>
-            <Button variant="primary">Nazad</Button>
-          </NavLink>
-        </Col>
-      </Row>
-    </Container>
+        <Row>
+          <Col>
+            <h1 className="fw-bold">{lekcija.naziv}</h1>
+            <p>{lekcija.sadrzaj}</p>
+            <div>
+              <NavLink to={`/oblast/${lekcija.id_oblasti}`}>
+                <Button variant="primary" className="me-2">Nazad</Button>
+              </NavLink>
+              {isAdmin && (
+                <>
+                  <NavLink to={`/izmeni/${idLekcije}`}>
+                    <Button variant="warning" className="me-2">Izmeni</Button>
+                  </NavLink>
+                  <Button variant="danger" onClick={handleDelete}>Obriši</Button>
+                </>
+              )}
+            </div>
+          </Col>
+        </Row>
+      </Container>
     </div>
     </>
   );

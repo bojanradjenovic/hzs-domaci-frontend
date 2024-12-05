@@ -91,7 +91,7 @@ const Lekcije = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              <Dropdown.Item as={NavLink} to="/kreiraj">
+              <Dropdown.Item as={NavLink} to={`/kreiraj/${idOblasti.idOblasti}`}>
                 Kreiraj
               </Dropdown.Item>
               <Dropdown.Divider />
@@ -105,7 +105,7 @@ const Lekcije = () => {
       {/* Glavni deo */}
       <div
       style={{
-        backgroundImage: 'url(../assets/blurovana2.jpg)', // Putanja je relativna u odnosu na public folder
+        backgroundImage: 'url(../assets/blurovana2.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         height: '100vh',

@@ -73,6 +73,7 @@ const Signup = () => {
       const data = await response.json();
 
       if (response.ok && data.success) {
+        alert('Nalog uspešno kreiran!');
         setSuccessMessage(data.message || "Uspešno registrovan!");
         setKorisnickoIme("");
         setSifra("");

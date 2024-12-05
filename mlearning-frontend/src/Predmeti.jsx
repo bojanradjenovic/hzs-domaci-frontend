@@ -35,7 +35,7 @@ const Predmeti = () => {
         /* Šalje na login ako korisnik nije ulogovan */
         if (!data.success) {
           console.log("Korisnik nije ulogovan. Prosleđujem na login starnicu.");
-          navigate("/login"); 
+          navigate("/login");
           return;
         }
         if (!response.ok) {
@@ -91,7 +91,7 @@ const Predmeti = () => {
       {/* Glavni deo */}
       <div
         style={{
-          backgroundImage: 'url(../assets/blurovana2.jpg)', // Relative path to public folder
+          backgroundImage: 'url(../assets/blurovana2.jpg)',
           backgroundSize: 'cover',
           backgroundPosition: 'center center',
           minHeight: '100vh',

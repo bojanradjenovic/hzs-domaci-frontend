@@ -10,6 +10,8 @@ import Login from './Login';
 import Logout from './Logout';
 import Signup from './Signup';
 import Lekcija from './Lekcija';
+import Kreiraj from './Kreiraj';
+import Izmeni from './Izmeni';
 
 const router = createBrowserRouter([
   {
@@ -39,6 +41,14 @@ const router = createBrowserRouter([
   {
     path: "/lekcija/:idLekcije",
     element: <Lekcija />
+  },
+  {
+    path: "/kreiraj/:idOblasti",
+    element: <Kreiraj />
+  },
+  {
+    path: "/izmeni/:idLekcije",
+    element: <Izmeni />
   }
 ]);
 
