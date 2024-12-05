@@ -1,162 +1,158 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Button, Container, Alert, Navbar } from "react-bootstrap";
-import { useParams, useNavigate, NavLink } from "react-router-dom";
+import { Row, Col, Button, Form, Container, Spinner } from "react-bootstrap";
+import { useNavigate, NavLink } from "react-router-dom";
 import LoadingSpinner from "./LoadingSpinner";
+import './GeneralnoCard.css';
 
-const Lekcija = () => {
-  const [korisnickoIme, setKorisnickoIme] = useState("");
-  const [lekcija, setLekcija] = useState([]);
-  const [loading, setLoading] = useState(true);
+const Login = () => {
+  const [korisnicko_ime, setKorisnicko_ime] = useState("");
+  const [sifra, setSifra] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [userChecked, setUserChecked] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false);
 
   const allCookies = document.cookie;
   const currentToken = allCookies.split("=")[1];
 
   const navigate = useNavigate();
-  const { idLekcije } = useParams();
 
   useEffect(() => {
-    const checkIfAdmin = async () => {
+    const tokenProvera = async () => {
       try {
-        const response = await fetch("http://100.71.17.101:5000/checkIfAdmin", {
+        const response = await fetch("http://100.71.17.101:5000/tokenProvera", {
           method: "GET",
           headers: {
-            "Authorization": `${currentToken}`
-          }
+            Authorization: `${currentToken}`,
+          },
         });
         const data = await response.json();
-        if (response.ok && data.success) {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-      } catch (error) {
-        console.error("Error checking admin status:", error);
-      }
-    };
-
-    checkIfAdmin();
-  }, [currentToken]);
-
-  useEffect(() => {
-    const fetchLekcija = async () => {
-      try {
-        const response = await fetch(`http://100.71.17.101:5000/getLekcija?id_lekcije=${idLekcije}`, {
-          method: "GET",
-          headers: {
-            "Authorization": `${currentToken}`
-          }
-        });
-        const data = await response.json();
-        if (!data.success) {
-          navigate("/login");
+        if (data.success) {
+          navigate("/");
           return;
         }
-        if (!response.ok) {
-          throw new Error("Unable to fetch lesson data.");
-        }
-        setKorisnickoIme(data.korisnicko_ime);
-        setLekcija(data.lekcija);
       } catch (error) {
-        setError(error.message);
+        console.error("Greša pri proveri tokena:", error);
       } finally {
         setLoading(false);
+        setUserChecked(true);
       }
     };
 
-    fetchLekcija();
-  }, [idLekcije, currentToken]);
+    tokenProvera();
+  }, [navigate]);
 
-  const handleDelete = async () => {
-    const formData = new URLSearchParams();
-    formData.append("id_lekcije", idLekcije);
-
-    try {
-      const response = await fetch("http://100.71.17.101:5000/deleteLekcija", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          "Authorization": `${currentToken}`
-        },
-        body: formData.toString()
-      });
-      const data = await response.json();
-      if (response.ok && data.success) {
-        alert("Lekcija uspešno obrisana!");
-        navigate(`/oblast/${lekcija.id_oblasti}`);
-      } else {
-        alert("Greška pri brisanju lekcije: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error deleting lesson:", error);
-      alert("Greška pri brisanju lekcije.");
-    }
-  };
-
-  if (loading) {
+  if (loading || !userChecked) {
     return <LoadingSpinner />;
   }
 
-  if (error) {
-    return (
-      <Container className="d-flex justify-content-center align-items-center vh-100">
-        <Alert variant="danger">{error}</Alert>
-      </Container>
-    );
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!korisnicko_ime.trim() || !sifra.trim()) {
+      setErrorMessage("Oba polja moraju biti popunjena.");
+      return;
+    }
+
+    setButtonLoading(true);
+
+    const formData = new URLSearchParams();
+    formData.append("korisnicko_ime", korisnicko_ime);
+    formData.append("sifra", sifra);
+
+    try {
+      const response = await fetch("http://100.71.17.101:5000/loginKorisnik", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: formData.toString(),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setErrorMessage(data.message || "Login failed");
+        return;
+      }
+
+      document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
+      navigate("/");
+    } catch (error) {
+      setErrorMessage("An error occurred during login");
+    } finally {
+      setButtonLoading(false);
+    }
+  };
 
   return (
-    <>
-      <Navbar bg="light" expand="lg" className="justify-content-between">
-        <Container fluid>
-          <Navbar.Text className="me-auto">Zdravo, {korisnickoIme}</Navbar.Text>
-          <NavLink to="/" className="mx-auto">
-            <Navbar.Brand className="ime">
-              <span className="blue-text">m</span>Learning
-            </Navbar.Brand>
-          </NavLink>
-          <NavLink to="/logout" className="ms-auto">
-            Log out
-          </NavLink>
-        </Container>
-      </Navbar>
-      <div
-        style={{
-          backgroundImage: 'url(../assets/blurovana2.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center center',
-          minHeight: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Container className="lekcija d-flex flex-column align-items-center justify-content-center">
-          <Row>
-            <Col>
-              <h1 className="fw-bold">{lekcija.naziv}</h1>
-              <p>{lekcija.sadrzaj}</p>
-              <div>
-                <NavLink to={`/oblast/${lekcija.id_oblasti}`}>
-                  <Button variant="primary" className="me-2">Nazad</Button>
-                </NavLink>
-                {isAdmin && (
+    <div
+      style={{
+        backgroundImage: 'url(../assets/knjige2.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Container className="login-container">
+        <h2 className="modern-login">
+          <span className="blue-text">m</span>Learning
+          <span className="log">.Login</span>
+        </h2>
+        <Row className="justify-content-start">
+          <Col xs={12} sm={8} md={6} lg={4}>
+            <Form onSubmit={handleSubmit} className="login-form">
+              <Form.Group controlId="formEmail">
+                <Form.Label>Korisničko ime</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Unesite korisničko ime"
+                  value={korisnicko_ime}
+                  onChange={(e) => setKorisnicko_ime(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group controlId="formPassword">
+                <Form.Label style={{ marginTop: '10px' }}>Šifra</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Unesite šifru"
+                  value={sifra}
+                  onChange={(e) => setSifra(e.target.value)}
+                />
+              </Form.Group>
+              <NavLink to="/signup" style={{ fontSize: '14px' }}>Nemate nalog? Registrujte se!</NavLink>
+              {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
+              <Button
+                variant="primary"
+                type="submit"
+                className="submit-btn"
+                disabled={buttonLoading}
+              >
+                {buttonLoading ? (
                   <>
-                    <NavLink to={`/izmeni/${idLekcije}`}>
-                      <Button variant="warning" className="me-2">Izmeni</Button>
-                    </NavLink>
-                    <Button variant="danger" onClick={handleDelete}>Obriši</Button>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="visually-hidden">Loading...</span>
                   </>
+                ) : (
+                  "Login"
                 )}
-              </div>
-            </Col>
-          </Row>
-        </Container>
-      </div>
-    </>
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </div>
   );
 };
 
-export default Lekcija;
+export default Login;
