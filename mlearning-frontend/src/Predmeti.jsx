@@ -39,7 +39,7 @@ const Predmeti = () => {
           return;
         }
         if (!response.ok) {
-          throw new Error("Ne mogu da dobijem podatke o predmetima.");
+          throw new Error(data.message || "Ne mogu da dobijem podatke o predmetima.");
         }
         console.log("Podaci dobijeni:", data);
         setKorisnickoIme(data.korisnicko_ime);
