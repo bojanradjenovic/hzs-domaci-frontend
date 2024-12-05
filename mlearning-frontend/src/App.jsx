@@ -7,6 +7,8 @@ import Predmeti from './Predmeti';
 import Oblasti from './Oblasti';
 import Lekcije from './Lekcije';
 import Login from './Login';
+import Logout from './Logout';
+import Signup from './Signup';
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
     element: <Oblasti />,
   },
   {
-    path: "oblast/:idOblasti",
+    path: "/oblast/:idOblasti",
     element: <Lekcije />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />
+  },
+  {
+    path: "/signup",
+    element: <Signup />
   }
 ]);
 

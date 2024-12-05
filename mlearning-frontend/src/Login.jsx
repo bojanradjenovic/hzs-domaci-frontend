@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react"; /* React */
-
-import { Card, Row, Col } from "react-bootstrap";
-
-import { Button, Form, Container } from "react-bootstrap"; /* Bootstrap objekti */
-
-import { useNavigate } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
-
+import { Row, Col } from "react-bootstrap";
+import { Button, Form, Container, Spinner } from "react-bootstrap"; /* Bootstrap objekti */
+import { useNavigate, Link } from "react-router-dom"; /* Navigacija bez interakcije korisnika */
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
 
 const Login = () => {
@@ -16,6 +12,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [userChecked, setUserChecked] = useState(false);
+  const [buttonLoading, setButtonLoading] = useState(false); // New state for button loading
 
   /* Izvlačenje tokena iz kolačića */
   const allCookies = document.cookie;
@@ -64,6 +61,8 @@ const Login = () => {
       return;
     }
 
+    setButtonLoading(true); // Start button loading animation
+
     const formData = new URLSearchParams();
     formData.append("korisnicko_ime", korisnicko_ime);
     formData.append("sifra", sifra);
@@ -82,14 +81,16 @@ const Login = () => {
       const data = await response.json();
       
       /* Šalje korisnika na glavnu stranicu ako je uspešnp ulogovan */
-      if (response.ok) {
-        document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
-        navigate("/");
-      } else {
+      if(!response.ok) {
         setErrorMessage(data.message || "Login failed");
       }
+
+      document.cookie = `token=${data.token}; Path=/; Max-Age=3600; SameSite=Lax;`;
+      navigate("/");
     } catch (error) {
       setErrorMessage("An error occurred during login");
+    } finally {
+      setButtonLoading(false); // Stop button loading animation
     }
   };
 
@@ -131,9 +132,28 @@ const Login = () => {
                   onChange={(e) => setSifra(e.target.value)}
                 />
               </Form.Group>
+              <Link to="/signup">Nemate nalog? Kliknite ovde kako biste ga napravili!</Link>
               {errorMessage && <p className="danger text-danger">{errorMessage}</p>}
-              <Button variant="primary" type="submit" className="submit-btn">
-                Login
+              <Button
+                variant="primary"
+                type="submit"
+                className="submit-btn"
+                disabled={buttonLoading} // Disable button during loading
+              >
+                {buttonLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="visually-hidden">Loading...</span>
+                  </>
+                ) : (
+                  "Login"
+                )}
               </Button>
             </Form>
           </Col>
