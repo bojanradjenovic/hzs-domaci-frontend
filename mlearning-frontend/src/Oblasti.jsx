@@ -83,23 +83,9 @@ const Oblasti = () => {
               mLearning
             </Navbar.Brand>
           </NavLink>
-
-          {/* Dropdown for the right side */}
-          <Dropdown className="ms-auto">
-            <Dropdown.Toggle variant="secondary" id="dropdown-custom-components">
-              Menu
-            </Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item as={NavLink} to="/kreiraj">
-                Kreiraj
-              </Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item as={NavLink} to="/logout">
-                Log out
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <NavLink to="/logout" className="ms-auto">
+            Log out
+          </NavLink>
         </Container>
       </Navbar>
       {/* Glavni deo */}
