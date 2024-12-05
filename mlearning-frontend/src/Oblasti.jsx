@@ -119,6 +119,11 @@ const Oblasti = () => {
             </Col>
           ))}
         </Row>
+        <Row>
+          <NavLink to={`/`}>
+              <Button variant="primary">Nazad</Button>
+          </NavLink>
+        </Row>
       </Container>
     </div>
     </>

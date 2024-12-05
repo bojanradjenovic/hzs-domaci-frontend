@@ -5,7 +5,6 @@ import { Card, Row, Col, Button, Container, Alert, Navbar } from "react-bootstra
 import { NavLink, useParams, useNavigate } from "react-router-dom"; /* Navigacija */
 
 import LoadingSpinner from "./LoadingSpinner"; /* Animacija učitavanja */
-import './GeneralnoCard.css';
 
 const Lekcije = () => {
   /* Deklarisanje konstanta */
